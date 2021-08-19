@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import TasklistList from "../../components/tasklists/TasklistList";
 import tasklistService from "../../services/tasklistService";
-const tasklistOverview = () => {
+const TasklistOverview = () => {
     const [tasklists, setTasklists] = useState([]);
 
     useEffect(async () => {
@@ -16,4 +16,4 @@ const tasklistOverview = () => {
     );
 };
 
-export default tasklistOverview;
+export default TasklistOverview;

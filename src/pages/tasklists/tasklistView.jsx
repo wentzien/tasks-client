@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
-import TasklistList from "../components/tasklists/TasklistList";
-import tasklistService from "../services/tasklistService";
+import TasklistList from "../../components/tasklists/TasklistList";
+import tasklistService from "../../services/tasklistService";
 
-const tasklistView = () => {
+const TasklistView = () => {
     const [tasklists, setTasklists] = useState([]);
 
     useEffect(async () => {
         const tasklists = await tasklistService.getAll();
         setTasklists(tasklists);
-    });
+    }, []);
 
     return (
         <div>
@@ -17,4 +17,4 @@ const tasklistView = () => {
     );
 };
 
-export default tasklistView;
+export default TasklistView;

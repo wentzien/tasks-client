@@ -14,7 +14,8 @@ import NavBar from "./components/general/NavBar";
 import Login from "./pages/accounts/login";
 import Logout from "./pages/accounts/logout";
 import Register from "./pages/accounts/register";
-import tasklistOverview from "./pages/tasklists/tasklistOverview";
+import TasklistOverview from "./pages/tasklists/TasklistOverview";
+import TasklistView from "./pages/tasklists/TasklistView";
 
 function App() {
     return (
@@ -22,8 +23,9 @@ function App() {
             <NavBar/>
             <main className="container">
                 <Switch>
-                    <Route exact path="/" component={tasklistOverview}></Route>
-                    <Route exact path="/tasklists" component={tasklistOverview}></Route>
+                    <Route exact path="/" component={TasklistOverview}></Route>
+                    <Route exact path="/tasklists" component={TasklistOverview}></Route>
+                    <Route exact path="/tasklists/:tasklistId" component={TasklistView}></Route>
                     <Route exact path="/accounts/login" component={Login}></Route>
                     <Route exact path="/accounts/logout" component={Logout}></Route>
                     <Route exact path="/accounts/register" component={Register}></Route>

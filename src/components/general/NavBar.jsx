@@ -32,16 +32,16 @@ class NavBar extends Component {
                         <Nav>{/* placeholder */}</Nav>
 
                         <Nav>
-                            <LinkContainer to="/galleries">
+                            <LinkContainer to="/tasklists">
                                 <Nav.Link>
-                                    Gallery
+                                    Tasklists
                                 </Nav.Link>
                             </LinkContainer>
                             <LinkContainer to="#">
-                                <Nav.Link>Highlights</Nav.Link>
+                                <Nav.Link>Tasks</Nav.Link>
                             </LinkContainer>
                             <LinkContainer to="#">
-                                <Nav.Link>Latest</Nav.Link>
+                                <Nav.Link>Due</Nav.Link>
                             </LinkContainer>
                         </Nav>
 
