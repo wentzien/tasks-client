@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import RegisterForm from "../components/accounts/RegisterForm";
+import RegisterForm from "../../components/accounts/RegisterForm";
 
 const Register = () => {
     return (
