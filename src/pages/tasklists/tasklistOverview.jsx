@@ -10,9 +10,9 @@ const TasklistOverview = () => {
     });
 
     return (
-        <div>
+        <React.Fragment>
             <TasklistList tasklists={tasklists}/>
-        </div>
+        </React.Fragment>
     );
 };
 
