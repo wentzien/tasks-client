@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
+import Card from "react-bootstrap/Card";
 
 const TaskItem = ({task}) => {
     return (
-        <div className="card">
-            <div className="card-body">
+        <Card>
+            <Card.Body>
                 {task.description}
-            </div>
-        </div>
+            </Card.Body>
+        </Card>
     );
 };
 

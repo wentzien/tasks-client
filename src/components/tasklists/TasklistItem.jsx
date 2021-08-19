@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
+import Card from "react-bootstrap/Card";
 
 const TasklistItem = ({tasklist}) => {
     return (
-        <div className="card">
-            <div className="card-body">
+        <Card>
+            <Card.Body>
                 <a href={"/tasklists/" + tasklist.id}>{tasklist.name}</a>
-            </div>
-        </div>
+            </Card.Body>
+        </Card>
     );
 };
 
