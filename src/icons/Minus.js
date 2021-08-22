@@ -1,4 +1,4 @@
-import createSvgIcon from '@material-ui/core/utils/createSvgIcon';
+import createSvgIcon from "@material-ui/core/utils/createSvgIcon";
 
 const Minus = createSvgIcon(
   <svg
@@ -13,7 +13,7 @@ const Minus = createSvgIcon(
       strokeWidth={2}
       d="M18 12H6"
     />
-  </svg>, 'Minus'
+  </svg>, "Minus"
 );
 
 export default Minus;

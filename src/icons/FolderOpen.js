@@ -1,4 +1,4 @@
-import createSvgIcon from '@material-ui/core/utils/createSvgIcon';
+import createSvgIcon from "@material-ui/core/utils/createSvgIcon";
 
 const FolderOpen = createSvgIcon(
   <svg
@@ -12,7 +12,7 @@ const FolderOpen = createSvgIcon(
       clipRule="evenodd"
     />
     <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
-  </svg>, 'FolderOpen'
+  </svg>, "FolderOpen"
 );
 
 export default FolderOpen;

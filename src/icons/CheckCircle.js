@@ -1,4 +1,4 @@
-import createSvgIcon from '@material-ui/core/utils/createSvgIcon';
+import createSvgIcon from "@material-ui/core/utils/createSvgIcon";
 
 const CheckCircle = createSvgIcon(
   <svg
@@ -13,7 +13,7 @@ const CheckCircle = createSvgIcon(
       strokeWidth={2}
       d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
     />
-  </svg>, 'CheckCircle'
+  </svg>, "CheckCircle"
 );
 
 export default CheckCircle;
