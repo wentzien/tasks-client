@@ -1,16 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import "@fontsource/roboto";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "react-quill/dist/quill.snow.css";
+import "nprogress/nprogress.css";
+import {StrictMode} from "react";
+import ReactDOM from "react-dom";
+import {HelmetProvider} from "react-helmet-async";
+import {BrowserRouter} from "react-router-dom";
+import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
+import App from "./App";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <StrictMode>
+        <HelmetProvider>
+            <StyledEngineProvider>
+                <BrowserRouter>
+                    <App/>
+                </BrowserRouter>
+            </StyledEngineProvider>
+        </HelmetProvider>
+    </StrictMode>,
+    document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
