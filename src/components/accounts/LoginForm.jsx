@@ -5,6 +5,8 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import useAuth from "../../hooks/useAuth";
+import {Navigate} from "react-router-dom";
 
 const initialValues = {
     email: "",
@@ -18,7 +20,7 @@ const validationSchema = yup.object({
         .required("Email is required"),
     password: yup
         .string("Enter your password")
-        .min(8, "Password should be of minimum 8 characters length")
+        .min(5, "Password should be of minimum 5 characters length")
         .required("Password is required"),
 });
 
@@ -30,7 +32,7 @@ const FormikTextField = ({...props}) => {
             <TextField
                 {...field}
                 {...props}
-                error={meta.touched && meta.error}
+                error={Boolean(meta.touched && meta.error)}
                 helperText={meta.touched && meta.error}
             />
         </>
@@ -38,17 +40,28 @@ const FormikTextField = ({...props}) => {
 }
 
 const LoginForm = () => {
+    const {login} = useAuth();
+
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, {setErrors, setSubmitting}) => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
+            onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
+                try {
+                    console.log(values);
+                    await login(values);
+
+                } catch (ex) {
+                    if (ex.response && ex.response.status === 400) {
+                        setStatus(ex.response.data);
+                        setSubmitting(false);
+                    }
+                }
             }}
         >
             {({
                   errors,
+                  status,
                   isSubmitting,
                   isValid,
                   dirty
@@ -71,10 +84,10 @@ const LoginForm = () => {
                         margin="normal"
                         variant="outlined"
                     />
-                    {errors.submit && (
+                    {status && (
                         <Box sx={{mt: 3}}>
                             <FormHelperText error>
-                                {errors.submit}
+                                {status}
                             </FormHelperText>
                         </Box>
                     )}
