@@ -9,7 +9,6 @@ import GuestGuard from "../components/auth/GuestGuard";
 const Loadable = (Component) => (props) => (
     <Suspense fallback={<LoadingScreen/>}>
         <Component {...props} />
-        <Component {...props} />
     </Suspense>
 );
 
@@ -40,6 +39,25 @@ const Test = Loadable(lazy(() => import("../pages/Test")));
 
 const routes = [
     {
+        path: "authentication",
+        children: [
+            {
+                path: "login",
+                element:
+                    <GuestGuard>
+                        <Login/>
+                    </GuestGuard>
+            },
+            {
+                path: "register",
+                element:
+                    <GuestGuard>
+                        <Register/>
+                    </GuestGuard>
+            },
+        ]
+    },
+    {
         path: "tasklists",
         element: <DashboardLayout/>,
         children: [
@@ -61,22 +79,6 @@ const routes = [
         path: "*",
         element: <MainLayout/>,
         children: [
-            {
-                path: "authentication",
-                children: [
-                    {
-                        path: "login",
-                        element:
-                            <GuestGuard>
-                                <Login/>
-                            </GuestGuard>
-                    },
-                    {
-                        path: "register",
-                        element: <Register/>
-                    },
-                ]
-            },
             {
                 path: "/",
                 element: <Navigate to="/home" replace/>

@@ -4,6 +4,7 @@ import {Box, Card, CardContent, Container, Divider, Link, Typography} from "@mat
 import Logo from "../../components/general/Logo";
 import LoginForm from "../../components/authentication/LoginForm";
 import {Link as RouterLink} from "react-router-dom";
+import AuthBanner from "../../components/authentication/AuthBanner";
 
 const Login = () => {
     return (
@@ -19,7 +20,7 @@ const Login = () => {
                     minHeight: "100vh"
                 }}
             >
-                {/* <AuthBanner /> */}
+                <AuthBanner />
                 <Container
                     maxWidth="sm"
                     sx={{py: "80px"}}
@@ -92,7 +93,7 @@ const Login = () => {
                                     mt: 3
                                 }}
                             >
-                                {<LoginForm/>}
+                                <LoginForm/>
                             </Box>
                             <Divider sx={{my: 3}}/>
                             <Link
