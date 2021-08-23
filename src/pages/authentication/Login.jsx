@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Helmet} from "react-helmet-async";
 import {Box, Card, CardContent, Container, Divider, Link, Typography} from "@material-ui/core";
 import Logo from "../../components/general/Logo";
