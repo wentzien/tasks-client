@@ -64,7 +64,7 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         const initialize = async () => {
             try {
-                const token = window.localStorage.getItem(tokenKey);
+                const token = authService.getToken();
 
                 if (token) {
                     const user = await authService.me(token);
@@ -72,7 +72,7 @@ export const AuthProvider = (props) => {
                     dispatch({
                         type: "INITIALIZE",
                         payload: {
-                            isAuthenticated: false,
+                            isAuthenticated: true,
                             user
                         }
                     });
