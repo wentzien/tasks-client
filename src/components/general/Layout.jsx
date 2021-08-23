@@ -1,7 +1,7 @@
 import {BrowserRouter as Router} from "react-router-dom";
 import NavBar from "./NavBar";
 import Pages from "../../pages/Pages";
-import MainLayout from "./MainLayout";
+import MainLayout from "./main/MainLayout";
 
 // import "../../styles/normalize.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
