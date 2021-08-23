@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import authService from "../services/authService";
 import userService from "../services/userService";
 
-const tokenKey = "token";
-
 const initialState = {
     isAuthenticated: false,
     isInitialized: false,
