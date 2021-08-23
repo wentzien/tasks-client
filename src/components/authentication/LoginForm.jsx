@@ -45,9 +45,8 @@ const LoginForm = () => {
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
+            onSubmit={async (values, {setStatus, setSubmitting}) => {
                 try {
-                    console.log(values);
                     await login(values);
 
                 } catch (ex) {
@@ -59,7 +58,6 @@ const LoginForm = () => {
             }}
         >
             {({
-                  errors,
                   status,
                   isSubmitting,
                   isValid,
