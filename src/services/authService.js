@@ -1,48 +1,34 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
-import { apiUrl } from "../config.json";
-// import Cookies from "js-cookie";
+import {apiUrl} from "../config.json";
 
 const apiEndpoint = apiUrl + "/auth";
 const tokenKey = "token";
 
-http.setJwt(getJwt());
+const login = async (user) => {
+    const {data: token} = await http.post(apiEndpoint, {
+        email: user.email,
+        password: user.password
+    });
 
-export async function login(email, password) {
-  const { data: jwt } = await http.post(apiEndpoint, { email, password });
-  localStorage.setItem(tokenKey, jwt);
-  // Cookies.set(tokenKey, jwt);
+    return token;
+};
+
+const me = (token) => {
+    http.setJwt(token);
+    return jwtDecode(token);
 }
 
-export function loginWithJwt(jwt) {
-  localStorage.setItem(tokenKey, jwt);
-  // Cookies.set(tokenKey, jwt);
-}
+const getToken = () => window.localStorage.getItem(tokenKey);
 
-export function logout() {
-  localStorage.removeItem(tokenKey);
-  // Cookies.remove(tokenKey);
-}
+const setToken = (token) => window.localStorage.setItem(tokenKey, token);
 
-export function getCurrentUser() {
-  try {
-    const jwt = localStorage.getItem(tokenKey);
-    // const jwt = Cookies.get(tokenKey);
-    return jwtDecode(jwt);
-  } catch (ex) {
-    return null;
-  }
-}
-
-export function getJwt() {
-  return localStorage.getItem(tokenKey);
-  // return Cookies.get(tokenKey);
-}
+const removeToken = () => window.localStorage.removeItem(tokenKey);
 
 export default {
-  login,
-  loginWithJwt,
-  logout,
-  getCurrentUser,
-  getJwt
+    login,
+    me,
+    getToken,
+    setToken,
+    removeToken
 };
