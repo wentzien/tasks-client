@@ -21,9 +21,9 @@ async function getById(tasklistId) {
     }
 }
 
-async function create() {
+async function create(data) {
     try {
-        const response = await http.post(apiUrl + "/tasklists");
+        const response = await http.post(apiUrl + "/tasklists", data);
         return response.data;
 
     } catch (ex) {
