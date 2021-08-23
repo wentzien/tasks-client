@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import {HelmetProvider} from "react-helmet-async";
 import {BrowserRouter} from "react-router-dom";
 import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
+import {AuthProvider} from "./contexts/AuthContext";
 import App from "./App";
 
 ReactDOM.render(
@@ -15,7 +16,9 @@ ReactDOM.render(
         <HelmetProvider>
             <StyledEngineProvider>
                 <BrowserRouter>
-                    <App/>
+                    <AuthProvider>
+                        <App/>
+                    </AuthProvider>
                 </BrowserRouter>
             </StyledEngineProvider>
         </HelmetProvider>
