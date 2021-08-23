@@ -2,6 +2,7 @@ import {createContext, useEffect, useReducer} from "react";
 import PropTypes from "prop-types";
 import authService from "../services/authService";
 import userService from "../services/userService";
+import httpService from "../services/httpService";
 
 const initialState = {
     isAuthenticated: false,
@@ -114,6 +115,7 @@ export const AuthProvider = (props) => {
 
     const logout = () => {
         authService.removeToken();
+        httpService.removeTokenHeader();
         dispatch({type: "LOGOUT"});
     };
 

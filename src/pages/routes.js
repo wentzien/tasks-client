@@ -3,7 +3,8 @@ import {Navigate} from "react-router-dom";
 import LoadingScreen from "../components/general/LoadingScreen";
 import MainLayout from "../components/general/main/MainLayout";
 import DashboardLayout from "../components/general/dashboard/DashboardLayout";
-import GuestGuard from "../components/auth/GuestGuard";
+import GuestGuard from "../components/guards/GuestGuard";
+import AuthGuard from "../components/guards/AuthGuard";
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (
@@ -25,6 +26,7 @@ const TaskOverview = Loadable(lazy(() => import("../pages/tasklists/tasks/TaskOv
 
 const Login = Loadable(lazy(() => import("./authentication/Login")));
 const Register = Loadable(lazy(() => import("./authentication/Register")));
+const Logout = Loadable(lazy(() => import("./authentication/Logout")));
 
 // Error pages
 
@@ -54,6 +56,10 @@ const routes = [
                     <GuestGuard>
                         <Register/>
                     </GuestGuard>
+            },
+            {
+                path: "logout",
+                element: <Logout/>
             },
         ]
     },

@@ -1,16 +1,16 @@
-import React, {Component} from "react";
-import authService from "../../services/authService";
+import {useEffect} from "react";
+import useAuth from "../../hooks/useAuth";
+import {Navigate} from "react-router-dom";
 
-class Logout extends Component {
-    componentDidMount() {
-        authService.logout();
+const Logout = () => {
+    const {logout} = useAuth();
 
-        window.location = "/";
-    }
+    useEffect(() => {
+        logout();
+    }, []);
 
-    render() {
-        return null;
-    }
-}
+    return (<Navigate to="/home"/>);
+};
 
 export default Logout;
+

@@ -15,7 +15,7 @@ const login = async (user) => {
 };
 
 const me = (token) => {
-    http.setJwt(token);
+    http.setTokenHeader(token);
     return jwtDecode(token);
 }
 

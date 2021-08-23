@@ -15,8 +15,12 @@ axios.interceptors.response.use(null, error => {
     return Promise.reject(error);
 });
 
-function setJwt(jwt) {
+const setTokenHeader = (jwt) => {
     axios.defaults.headers.common["x-auth-token"] = jwt || "";
+}
+
+const removeTokenHeader = () => {
+    axios.defaults.headers.common["x-auth-token"] = "";
 }
 
 export default {
@@ -24,5 +28,6 @@ export default {
     post: axios.post,
     put: axios.put,
     delete: axios.delete,
-    setJwt
+    setTokenHeader,
+    removeTokenHeader
 };
