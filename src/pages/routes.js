@@ -1,7 +1,8 @@
 import {Suspense, lazy} from "react";
 import {Navigate} from "react-router-dom";
 import LoadingScreen from "../components/general/LoadingScreen";
-import MainLayout from "../components/general/MainLayout";
+import MainLayout from "../components/general/main/MainLayout";
+import DashboardLayout from "../components/general/dashboard/DashboardLayout";
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (
@@ -14,9 +15,14 @@ const Loadable = (Component) => (props) => (
 
 const Home = Loadable(lazy(() => import("../pages/Home")));
 
+// Tasklist Pages
+
+const TasklistOverview = Loadable(lazy(() => import("../pages/tasklists/TasklistOverview")));
+const TaskOverview = Loadable(lazy(() => import("../pages/tasklists/tasks/TaskOverview")));
+
 // Authentication pages
 
-const Login = Loadable(lazy(() => import("../pages/accounts/login")));
+const Login = Loadable(lazy(() => import("./accounts/Login")));
 const Register = Loadable(lazy(() => import("../pages/accounts/register")));
 
 // Error pages
@@ -27,8 +33,28 @@ const ServerError = Loadable(lazy(() => import("../pages/ServerError")));
 
 // Other pages
 
+const Test = Loadable(lazy(() => import("../pages/Test")));
+
 
 const routes = [
+    {
+        path: "tasklists",
+        element: <DashboardLayout/>,
+        children: [
+            {
+                path: "/",
+                element: <TasklistOverview/>
+            },
+            {
+                path: ":tasklistId",
+                element: <TaskOverview/>
+            },
+            {
+                path: "test",
+                element: <Test/>
+            }
+        ]
+    },
     {
         path: "*",
         element: <MainLayout/>,
@@ -38,26 +64,17 @@ const routes = [
                 children: [
                     {
                         path: "login",
-                        element: (
-                            <Login/>
-                        )
+                        element: <Login/>
                     },
                     {
                         path: "register",
-                        element: (
-                            <Register/>
-                        )
+                        element: <Register/>
                     },
                 ]
             },
             {
                 path: "/",
-                element: (
-                    <Navigate
-                        to="/home"
-                        replace
-                    />
-                )
+                element: <Navigate to="/home" replace/>
             },
             {
                 path: "/home",
@@ -77,8 +94,8 @@ const routes = [
             },
             {
                 path: "*",
-                element: <NotFound/>
-            }
+                element: <Navigate to="/404" replace/>
+            },
         ]
     }
 ];
