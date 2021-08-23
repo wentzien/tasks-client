@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
-import Login from "../../pages/accounts/Login";
+import Login from "../../pages/authentication/Login";
 
 const AuthGuard = (props) => {
   const { children } = props;

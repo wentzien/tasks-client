@@ -55,16 +55,16 @@
 //                                         <NavDropdown.Item>Settings</NavDropdown.Item>
 //                                     </LinkContainer>
 //                                     <NavDropdown.Divider/>
-//                                     <LinkContainer to="/accounts/logout">
+//                                     <LinkContainer to="/authentication/logout">
 //                                         <NavDropdown.Item>Logout</NavDropdown.Item>
 //                                     </LinkContainer>
 //                                 </NavDropdown>
 //                             ) : (
 //                                 <React.Fragment>
-//                                     <LinkContainer to="/accounts/login">
+//                                     <LinkContainer to="/authentication/login">
 //                                         <Nav.Link>Login</Nav.Link>
 //                                     </LinkContainer>
-//                                     <LinkContainer to="/accounts/register">
+//                                     <LinkContainer to="/authentication/register">
 //                                         <Nav.Link>
 //                                             Register
 //                                         </Nav.Link>

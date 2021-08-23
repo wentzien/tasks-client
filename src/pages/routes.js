@@ -24,8 +24,8 @@ const TaskOverview = Loadable(lazy(() => import("../pages/tasklists/tasks/TaskOv
 
 // Authentication pages
 
-const Login = Loadable(lazy(() => import("./accounts/Login")));
-const Register = Loadable(lazy(() => import("../pages/accounts/register")));
+const Login = Loadable(lazy(() => import("./authentication/Login")));
+const Register = Loadable(lazy(() => import("./authentication/Register")));
 
 // Error pages
 
