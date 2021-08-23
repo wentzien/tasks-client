@@ -3,10 +3,12 @@ import {Navigate} from "react-router-dom";
 import LoadingScreen from "../components/general/LoadingScreen";
 import MainLayout from "../components/general/main/MainLayout";
 import DashboardLayout from "../components/general/dashboard/DashboardLayout";
+import GuestGuard from "../components/auth/GuestGuard";
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (
     <Suspense fallback={<LoadingScreen/>}>
+        <Component {...props} />
         <Component {...props} />
     </Suspense>
 );
@@ -64,7 +66,10 @@ const routes = [
                 children: [
                     {
                         path: "login",
-                        element: <Login/>
+                        element:
+                            <GuestGuard>
+                                <Login/>
+                            </GuestGuard>
                     },
                     {
                         path: "register",
