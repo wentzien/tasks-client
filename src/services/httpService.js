@@ -19,6 +19,10 @@ const setTokenHeader = (jwt) => {
     axios.defaults.headers.common["x-auth-token"] = jwt || "";
 }
 
+const getTokenHeader = () => {
+    return axios.defaults.headers.common["x-auth-token"];
+}
+
 const removeTokenHeader = () => {
     axios.defaults.headers.common["x-auth-token"] = "";
 }
@@ -29,5 +33,6 @@ export default {
     put: axios.put,
     delete: axios.delete,
     setTokenHeader,
-    removeTokenHeader
+    removeTokenHeader,
+    getTokenHeader
 };
