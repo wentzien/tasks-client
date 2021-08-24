@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Link as RouterLink, useLocation} from "react-router-dom";
 import PropTypes from "prop-types";
 import {Avatar, Box, Button, Divider, Drawer, Link, Typography} from "@material-ui/core";
@@ -15,8 +15,9 @@ import TodayRoundedIcon from "@material-ui/icons/TodayRounded";
 import Logo from "../Logo";
 import NavSection from "../NavSection";
 import Scrollbar from "../Scrollbar";
+import tasklistService from "../../../services/tasklistService";
 
-const sections = [
+const basicSections = [
     {
         title: "General",
         items: [
@@ -62,7 +63,7 @@ const DashboardSidebar = (props) => {
     const {onMobileClose, openMobile} = props;
     const location = useLocation();
     const {user} = useAuth();
-    console.log(user);
+    const [sections, setSections] = useState(basicSections);
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
     useEffect(() => {
@@ -70,6 +71,22 @@ const DashboardSidebar = (props) => {
             onMobileClose();
         }
     }, [location.pathname]);
+
+    useEffect(async () => {
+        if (user) {
+            try {
+                const tasklists = await tasklistService.getAll();
+                console.log(tasklists);
+                if (tasklists) {
+                    const newSections = [...sections];
+                    newSections[1].items = tasklists;
+                    setSections(newSections);
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        }
+    }, [user]);
 
     const content = (
         <Box
