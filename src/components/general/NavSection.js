@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import {matchPath} from "react-router-dom";
 import {List, ListSubheader} from "@material-ui/core";
 import NavItem from "./NavItem";
+import ListRoundedIcon from "@material-ui/icons/ListRounded";
 
 const renderNavItems = ({depth = 0, items, pathname}) => (
     <List disablePadding>
@@ -20,6 +21,8 @@ const renderNavItems = ({depth = 0, items, pathname}) => (
 const reduceChildRoutes = ({acc, pathname, item, depth}) => {
     // if no path provided
     item.path = item.path || "/tasklists/" + item.id;
+    // if no icon provided
+    item.icon = item.icon || <ListRoundedIcon fontSize="small"/>
     // ------------------------
 
     // const key = `${item.title}-${depth}`;
