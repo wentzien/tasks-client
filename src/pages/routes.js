@@ -4,7 +4,6 @@ import LoadingScreen from "../components/general/LoadingScreen";
 import MainLayout from "../components/general/main/MainLayout";
 import DashboardLayout from "../components/general/dashboard/DashboardLayout";
 import GuestGuard from "../components/guards/GuestGuard";
-import AuthGuard from "../components/guards/AuthGuard";
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (
@@ -20,7 +19,7 @@ const Home = Loadable(lazy(() => import("../pages/Home")));
 // Tasklist Pages
 
 const TasklistOverview = Loadable(lazy(() => import("../pages/tasklists/TasklistOverview")));
-const TaskOverview = Loadable(lazy(() => import("../pages/tasklists/tasks/TaskOverview")));
+const TaskView = Loadable(lazy(()=>import("../pages/tasklists/tasks/TaskView")));
 
 // Authentication pages
 
@@ -69,11 +68,20 @@ const routes = [
         children: [
             {
                 path: "/",
-                element: <TasklistOverview/>
+                element: "My Tasklists Dashboard"
             },
             {
                 path: ":tasklistId",
-                element: <TaskOverview/>
+                children: [
+                    {
+                        path: "/",
+                        element: <TasklistOverview/>
+                    },
+                    {
+                        path: "tasks/:taskId",
+                        element: <TaskView/>
+                    },
+                ]
             },
             {
                 path: "test",
