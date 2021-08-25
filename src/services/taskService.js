@@ -2,43 +2,23 @@ import {apiUrl} from "../config.json";
 import http from "./httpService";
 
 async function getAll(tasklistId) {
-    try {
-        const response = await http.get(apiUrl + "/tasklists/" + tasklistId + "/tasks");
-        return response.data;
-
-    } catch (ex) {
-        console.log(ex);
-    }
+    const response = await http.get(apiUrl + "/tasklists/" + tasklistId + "/tasks");
+    return response.data;
 }
 
 async function getById(tasklistId, taskId) {
-    try {
-        const response = await http.get(apiUrl + "/tasklists/" + tasklistId + "/tasks" + taskId);
-        return response.data;
-
-    } catch (ex) {
-        console.log(ex);
-    }
+    const response = await http.get(apiUrl + "/tasklists/" + tasklistId + "/tasks" + taskId);
+    return response.data;
 }
 
-async function create(tasklistId) {
-    try {
-        const response = await http.post(apiUrl + "/tasklists/" + tasklistId + "/tasks");
-        return response.data;
-
-    } catch (ex) {
-        console.log(ex);
-    }
+async function create(tasklistId, task) {
+    const response = await http.post(apiUrl + "/tasklists/" + tasklistId + "/tasks", task);
+    return response.data;
 }
 
 async function remove(tasklistId, taskId) {
-    try {
-        const response = await http.post(apiUrl + "/tasklists/" + tasklistId + "/tasks" + taskId);
-        return response.data;
-
-    } catch (ex) {
-        console.log(ex);
-    }
+    const response = await http.post(apiUrl + "/tasklists/" + tasklistId + "/tasks" + taskId);
+    return response.data;
 }
 
 export default {
