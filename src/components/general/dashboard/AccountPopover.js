@@ -42,7 +42,7 @@ const AccountPopover = () => {
                 }}
             >
                 <Avatar
-                    src="/static/icons/rocket2.svg"
+                    src="/static/img/user.jpg"
                     // src={user.avatar}
                     sx={{
                         height: 32,

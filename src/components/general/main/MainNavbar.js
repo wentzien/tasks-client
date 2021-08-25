@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {Link as RouterLink} from "react-router-dom";
-import {AppBar, Box, Button, Chip, Divider, IconButton, Link, Toolbar} from "@material-ui/core";
+import {AppBar, Box, Divider, IconButton, Link, Toolbar} from "@material-ui/core";
 import MenuIcon from "../../../icons/Menu";
 import Logo from "../Logo";
 
@@ -52,32 +52,6 @@ const MainNavbar = (props) => {
                     <Link
                         color="textSecondary"
                         component={RouterLink}
-                        to="/tasklists"
-                        underline="none"
-                        variant="body1"
-                    >
-                        Tasklists
-                    </Link>
-                    <Chip
-                        color="primary"
-                        label="NEW"
-                        size="small"
-                        sx={{
-                            maxHeight: 20,
-                            ml: 1,
-                            mr: 2
-                        }}
-                    />
-                    <Divider
-                        orientation="vertical"
-                        sx={{
-                            height: 32,
-                            mx: 2
-                        }}
-                    />
-                    <Link
-                        color="textSecondary"
-                        component={RouterLink}
                         to="/authentication/register"
                         underline="none"
                         variant="body1"
@@ -85,6 +59,7 @@ const MainNavbar = (props) => {
                         Register
                     </Link>
                     <Link
+                        sx={{ml: 2}}
                         color="textSecondary"
                         component={RouterLink}
                         to="/authentication/login"

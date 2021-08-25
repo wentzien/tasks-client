@@ -41,53 +41,26 @@ const MainSidebar = (props) => {
         <RouterLink to="/">
           <Logo />
         </RouterLink>
-        <Box
-          sx={{
-            display: "flex",
-            pb: 2,
-            pt: 3
-          }}
-        >
           <Link
-            color="textSecondary"
-            component={RouterLink}
-            to="/browse"
-            underline="none"
-            variant="body1"
+              sx={{pt: 2, pb: 2, mt: 2}}
+              color="textSecondary"
+              component={RouterLink}
+              to="/authentication/register"
+              underline="none"
+              variant="body1"
           >
-            Browse Components
+              Register
           </Link>
-          <Chip
-            color="primary"
-            label="NEW"
-            size="small"
-            sx={{
-              maxHeight: 20,
-              ml: 1,
-              mr: 2
-            }}
-          />
-        </Box>
-        <Link
-          color="textSecondary"
-          component={RouterLink}
-          to="/docs"
-          underline="none"
-          variant="body1"
-        >
-          Documentation
-        </Link>
-        <Button
-          color="primary"
-          component="a"
-          href="https://material-ui.com/store/items/devias-kit-pro"
-          size="small"
-          sx={{ mt: 4 }}
-          target="_blank"
-          variant="contained"
-        >
-          Get the kit
-        </Button>
+          <Link
+              sx={{pt: 2, pb: 2}}
+              color="textSecondary"
+              component={RouterLink}
+              to="/authentication/login"
+              underline="none"
+              variant="body1"
+          >
+              Login
+          </Link>
       </Box>
     </Drawer>
   );

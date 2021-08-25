@@ -15,7 +15,7 @@ const Loadable = (Component) => (props) => (
 
 // Main Pages
 
-const Home = Loadable(lazy(() => import("../pages/Home")));
+const Welcome = Loadable(lazy(() => import("./Welcome")));
 
 // Tasklist Pages
 
@@ -99,7 +99,7 @@ const routes = [
                 path: "/",
                 element:
                     <GuestGuard>
-                        <Home/>
+                        <Welcome/>
                     </GuestGuard>
             },
             {

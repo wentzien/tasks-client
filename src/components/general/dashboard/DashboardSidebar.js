@@ -138,7 +138,7 @@ const DashboardSidebar = (props) => {
                         <RouterLink to="/dashboard/account">
                             <Avatar
                                 // src={user.avatar}
-                                src="/static/icons/rocket2.svg"
+                                src="/static/img/user.jpg"
                                 sx={{
                                     cursor: "pointer",
                                     height: 48,

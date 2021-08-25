@@ -83,7 +83,8 @@ const baseOptions = {
     button: {
       fontWeight: 600
     },
-    fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
+    fontFamily: "Roboto, sans-serif",
+    // fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
     h1: {
       fontWeight: 600,
       fontSize: "3.5rem"
