@@ -20,12 +20,9 @@ const TasklistOverview = () => {
     useEffect(async () => {
         try {
             const tasklist = await tasklistService.getById(tasklistId);
-            console.log(tasklist);
             setTasklist(tasklist)
             const tasks = await taskService.getAll(tasklistId);
-            console.log(tasks)
             setTasks(tasks);
-
         } catch (ex) {
             console.error(ex);
         }
@@ -34,7 +31,6 @@ const TasklistOverview = () => {
     }, [tasklistId]);
 
     const handleSubmit = async (values, {setStatus, setSubmitting, resetForm}) => {
-        console.log(values);
         try {
             const notConfirmedTaskId = "newNotYetConfirmedTask"
             let tasksCache = [...tasks]
@@ -50,6 +46,7 @@ const TasklistOverview = () => {
             tasksCache.push(confirmedTask);
             setTasks(tasksCache);
         } catch (ex) {
+            console.error(ex);
             if (ex.response && ex.response.status === 400) {
                 setStatus(ex.response.data);
                 setSubmitting(false);
@@ -58,8 +55,14 @@ const TasklistOverview = () => {
         resetForm();
     };
 
-    const handleDelete = (taskId) => {
-        console.log("delete", taskId);
+    const handleDelete = async (taskId) => {
+        try {
+            const tasksCache = tasks.filter(task => task.id !== taskId);
+            setTasks(tasksCache);
+            await taskService.remove(tasklistId, taskId);
+        } catch (ex) {
+            console.error(ex);
+        }
     };
 
     const handleMarkFinished = (taskId) => {
