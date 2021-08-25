@@ -33,17 +33,29 @@ const TasklistOverview = () => {
 
     }, [tasklistId]);
 
-    const handleSubmit = async (values, {setStatus, setSubmitting}) => {
+    const handleSubmit = async (values, {setStatus, setSubmitting, resetForm}) => {
         console.log(values);
         try {
-            await taskService.create(tasklistId, values);
+            const notConfirmedTaskId = "newNotYetConfirmedTask"
+            let tasksCache = [...tasks]
+            const newTask = {
+                id: notConfirmedTaskId,
+                description: values.description
+            };
+            tasksCache.push(newTask);
+            setTasks(tasksCache);
 
+            const confirmedTask = await taskService.create(tasklistId, values);
+            tasksCache = tasks.filter(task => task.id !== notConfirmedTaskId);
+            tasksCache.push(confirmedTask);
+            setTasks(tasksCache);
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 setStatus(ex.response.data);
                 setSubmitting(false);
             }
         }
+        resetForm();
     };
 
     const handleDelete = (taskId) => {
