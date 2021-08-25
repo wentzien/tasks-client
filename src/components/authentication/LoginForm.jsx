@@ -45,12 +45,18 @@ const LoginForm = () => {
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={async (values, {setStatus, setSubmitting}) => {
+            onSubmit={async (values, {setStatus, setSubmitting, resetForm}) => {
                 try {
                     await login(values);
 
                 } catch (ex) {
                     if (ex.response && ex.response.status === 400) {
+                        resetForm({
+                            values: {
+                                email: values.email,
+                                password: ""
+                            }
+                        });
                         setStatus(ex.response.data);
                         setSubmitting(false);
                     }
