@@ -7,7 +7,7 @@ async function getAll(tasklistId) {
 }
 
 async function getById(tasklistId, taskId) {
-    const response = await http.get(apiUrl + "/tasklists/" + tasklistId + "/tasks" + taskId);
+    const response = await http.get(apiUrl + "/tasklists/" + tasklistId + "/tasks/" + taskId);
     return response.data;
 }
 
@@ -17,7 +17,7 @@ async function create(tasklistId, task) {
 }
 
 async function remove(tasklistId, taskId) {
-    const response = await http.post(apiUrl + "/tasklists/" + tasklistId + "/tasks" + taskId);
+    const response = await http.delete(apiUrl + "/tasklists/" + tasklistId + "/tasks/" + taskId);
     return response.data;
 }
 
