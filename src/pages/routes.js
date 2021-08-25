@@ -4,6 +4,7 @@ import LoadingScreen from "../components/general/LoadingScreen";
 import MainLayout from "../components/general/main/MainLayout";
 import DashboardLayout from "../components/general/dashboard/DashboardLayout";
 import GuestGuard from "../components/guards/GuestGuard";
+import AuthGuard from "../components/guards/AuthGuard";
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (
@@ -19,7 +20,8 @@ const Home = Loadable(lazy(() => import("../pages/Home")));
 // Tasklist Pages
 
 const TasklistOverview = Loadable(lazy(() => import("../pages/tasklists/TasklistOverview")));
-const TaskView = Loadable(lazy(()=>import("../pages/tasklists/tasks/TaskView")));
+const CreateTasklist = Loadable(lazy(() => import("./tasklists/CreateTasklist")));
+const TaskView = Loadable(lazy(() => import("./tasklists/TaskView")));
 
 // Authentication pages
 
@@ -34,9 +36,6 @@ const NotFound = Loadable(lazy(() => import("../pages/NotFound")));
 const ServerError = Loadable(lazy(() => import("../pages/ServerError")));
 
 // Other pages
-
-const Test = Loadable(lazy(() => import("../pages/Test")));
-
 
 const routes = [
     {
@@ -64,11 +63,18 @@ const routes = [
     },
     {
         path: "tasklists",
-        element: <DashboardLayout/>,
+        element:
+            <AuthGuard>
+                <DashboardLayout/>
+            </AuthGuard>,
         children: [
             {
                 path: "/",
                 element: "My Tasklists Dashboard"
+            },
+            {
+                path: "new",
+                element: <CreateTasklist/>
             },
             {
                 path: ":tasklistId",
@@ -83,10 +89,6 @@ const routes = [
                     },
                 ]
             },
-            {
-                path: "test",
-                element: <Test/>
-            }
         ]
     },
     {
@@ -95,11 +97,10 @@ const routes = [
         children: [
             {
                 path: "/",
-                element: <Navigate to="/home" replace/>
-            },
-            {
-                path: "/home",
-                element: <Home/>
+                element:
+                    <GuestGuard>
+                        <Home/>
+                    </GuestGuard>
             },
             {
                 path: "401",

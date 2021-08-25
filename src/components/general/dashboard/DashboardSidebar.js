@@ -11,11 +11,18 @@ import EventRoundedIcon from "@material-ui/icons/EventRounded";
 import DoneRoundedIcon from "@material-ui/icons/DoneRounded";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import TodayRoundedIcon from "@material-ui/icons/TodayRounded";
+import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 
 import Logo from "../Logo";
 import NavSection from "../NavSection";
 import Scrollbar from "../Scrollbar";
 import tasklistService from "../../../services/tasklistService";
+
+const tasklistCreationNavItem = {
+    title: "Create Tasklist",
+    path: "/tasklists/new",
+    icon: <AddBoxOutlinedIcon/>
+};
 
 const basicSections = [
     {
@@ -55,7 +62,9 @@ const basicSections = [
     },
     {
         title: "Tasklists",
-        items: []
+        items: [
+            tasklistCreationNavItem
+        ]
     }
 ];
 
@@ -76,17 +85,16 @@ const DashboardSidebar = (props) => {
         if (user) {
             try {
                 const tasklists = await tasklistService.getAll();
-                console.log(tasklists);
                 if (tasklists) {
                     const newSections = [...sections];
-                    newSections[1].items = tasklists;
+                    newSections[1].items = [tasklistCreationNavItem, ...tasklists];
                     setSections(newSections);
                 }
             } catch (ex) {
-                console.log(ex);
+                console.error(ex);
             }
         }
-    }, [user]);
+    }, [user, location.pathname]);
 
     const content = (
         <Box
@@ -177,31 +185,6 @@ const DashboardSidebar = (props) => {
                             {...section}
                         />
                     ))}
-                </Box>
-                <Divider/>
-                <Box sx={{p: 2}}>
-                    <Typography
-                        color="textPrimary"
-                        variant="subtitle2"
-                    >
-                        Need Help?
-                    </Typography>
-                    <Typography
-                        color="textSecondary"
-                        variant="body2"
-                    >
-                        Check our docs
-                    </Typography>
-                    <Button
-                        color="primary"
-                        component={RouterLink}
-                        fullWidth
-                        sx={{mt: 2}}
-                        to="/docs"
-                        variant="contained"
-                    >
-                        Documentation
-                    </Button>
                 </Box>
             </Scrollbar>
         </Box>
