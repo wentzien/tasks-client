@@ -16,6 +16,11 @@ async function create(tasklistId, task) {
     return response.data;
 }
 
+async function update(tasklistId, taskId, task) {
+    const response = await http.put(apiUrl + "/tasklists/" + tasklistId + "/tasks/" + taskId, task);
+    return response.data;
+}
+
 async function remove(tasklistId, taskId) {
     const response = await http.delete(apiUrl + "/tasklists/" + tasklistId + "/tasks/" + taskId);
     return response.data;
@@ -25,5 +30,6 @@ export default {
     getAll,
     getById,
     create,
+    update,
     remove
 };

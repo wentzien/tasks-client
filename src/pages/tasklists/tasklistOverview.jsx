@@ -9,6 +9,8 @@ import {Helmet} from "react-helmet-async";
 import Typography from "@material-ui/core/Typography";
 import tasklistService from "../../services/tasklistService";
 import TaskForm from "../../components/tasklists/TaskForm";
+import _ from "lodash";
+import toast from "react-hot-toast";
 
 const TasklistOverview = () => {
     const {tasklistId} = useParams();
@@ -31,9 +33,10 @@ const TasklistOverview = () => {
     }, [tasklistId]);
 
     const handleSubmit = async (values, {setStatus, setSubmitting, resetForm}) => {
+        const tasksBackup = [...tasks];
         try {
-            const notConfirmedTaskId = "newNotYetConfirmedTask"
             let tasksCache = [...tasks]
+            const notConfirmedTaskId = "newNotYetConfirmedTask" // should be unique
             const newTask = {
                 id: notConfirmedTaskId,
                 description: values.description
@@ -47,30 +50,55 @@ const TasklistOverview = () => {
             setTasks(tasksCache);
         } catch (ex) {
             console.error(ex);
+            toast.error("Unable to create new task.");
             if (ex.response && ex.response.status === 400) {
                 setStatus(ex.response.data);
                 setSubmitting(false);
             }
+            setTasks(tasksBackup);
         }
         resetForm();
     };
 
     const handleDelete = async (taskId) => {
+        const tasksBackup = [...tasks];
         try {
             const tasksCache = tasks.filter(task => task.id !== taskId);
             setTasks(tasksCache);
             await taskService.remove(tasklistId, taskId);
         } catch (ex) {
             console.error(ex);
+            toast.error("Unable to delete task.");
+            setTasks(tasksBackup);
         }
     };
 
-    const handleMarkFinished = (taskId) => {
-        console.log("markFinished", taskId);
+    const handleMarkFinished = async (task) => {
+        task.done = !task.done;
+        await updateTask(task);
     };
 
-    const handleMarkImportant = (task) => {
-        console.log("markImportant", task);
+    const handleMarkImportant = async (task) => {
+        task.important = !task.important;
+        await updateTask(task);
+    };
+
+    const updateTask = async (updatedTask) => {
+        const tasksBackup = [...tasks];
+        try {
+            const tasksCache = [...tasks];
+            const index = tasksCache.indexOf(updatedTask);
+            tasksCache[index] = updatedTask;
+
+            setTasks(tasksCache);
+            const taskId = updatedTask.id;
+            updatedTask = _.pick(updatedTask, ["description", "done", "important"]);
+            await taskService.update(tasklistId, taskId, updatedTask);
+        } catch (ex) {
+            console.error(ex);
+            toast.error("Unable to update task.");
+            setTasks(tasksBackup);
+        }
     };
 
     return (
