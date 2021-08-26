@@ -4,14 +4,21 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import TaskItem from "./TaskItem";
+import {useEffect, useState} from "react";
 
 const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant}) => {
+    const [sortedTasks, setSortedTasks] = useState([]);
     let taskCounter = 0;
 
     const renderDivider = () => {
         taskCounter++;
         return taskCounter !== tasks.length;
     }
+
+    useEffect(() => {
+        tasks.sort((a, b) => a.done - b.done || Date.parse(b.createdAt) - Date.parse(a.createdAt));
+        setSortedTasks(tasks);
+    }, [tasks]);
 
     return (
         <Card sx={{mt: 4}}>
@@ -20,7 +27,7 @@ const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant}) => {
             <CardContent sx={{pt: 0}}>
                 <List>
                     {
-                        tasks.map((task) => (
+                        sortedTasks.map((task) => (
                             <TaskItem
                                 key={task.id}
                                 task={task}
@@ -29,50 +36,6 @@ const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant}) => {
                                 onMarkImportant={onMarkImportant}
                                 divider={renderDivider()}
                             />
-
-                            // <ListItem
-                            //     key={task.id}
-                            //     disableGutters
-                            //     divider={renderDivider()}
-                            //     sx={{
-                            //         justifyContent: "space-between",
-                            //         padding: 2
-                            //     }}
-                            // >
-                            //     <Box display="flex">
-                            //         <Box sx={{display: "flex", alignItems: "center"}}>
-                            //             <CheckCircleOutlineIcon
-                            //                 onClick={() => onMarkFinished(task.id)}
-                            //                 sx={{cursor: "pointer"}}
-                            //             />
-                            //         </Box>
-                            //         <Box sx={{ml: 2}}>
-                            //             <Typography
-                            //                 color="textPrimary"
-                            //                 variant="subtitle2"
-                            //             >
-                            //                 {task.description}
-                            //             </Typography>
-                            //             <Typography
-                            //                 color="textSecondary"
-                            //                 variant="body2"
-                            //             >
-                            //                 {format(addDays(new Date(), 14).getTime(), "dd MMM yyyy")}
-                            //             </Typography>
-                            //         </Box>
-                            //     </Box>
-                            //
-                            //     <Box display="flex">
-                            //         <StarOutlineRoundedIcon
-                            //             onClick={() => onMarkImportant(task)}
-                            //             sx={{cursor: "pointer"}}
-                            //         />
-                            //         <DeleteOutlineRoundedIcon
-                            //             onClick={() => onDelete(task.id)}
-                            //             sx={{cursor: "pointer"}}
-                            //         />
-                            //     </Box>
-                            // </ListItem>
                         ))
                     }
                 </List>
