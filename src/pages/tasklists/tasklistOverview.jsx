@@ -1,21 +1,22 @@
 import {useState, useEffect} from "react";
 import {useParams, Link as RouterLink} from "react-router-dom";
+import tasklistService from "../../services/tasklistService";
 import taskService from "../../services/taskService";
+import {Helmet} from "react-helmet-async";
+import toast from "react-hot-toast";
+import _ from "lodash";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import TaskList from "../../components/tasklists/TaskList";
+import TaskCreationForm from "../../components/tasklists/TaskCreationForm";
+import TaskAdaptionForm from "../../components/tasklists/TaskAdaptionForm";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import GroupAddRoundedIcon from "@material-ui/icons/GroupAddRounded";
-import {Helmet} from "react-helmet-async";
-import tasklistService from "../../services/tasklistService";
-import TaskCreationForm from "../../components/tasklists/TaskCreationForm";
-import _ from "lodash";
-import toast from "react-hot-toast";
-import TaskAdaptionForm from "../../components/tasklists/TaskAdaptionForm";
 
 const TasklistOverview = () => {
     const {tasklistId} = useParams();
@@ -23,6 +24,7 @@ const TasklistOverview = () => {
     const [taskToAdapt, setTaskToAdapt] = useState({});
     const [tasks, setTasks] = useState([]);
     const [toggleTaskAdaption, setToggleTaskAdaption] = useState(false);
+    const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
 
     useEffect(async () => {
         try {
@@ -30,6 +32,7 @@ const TasklistOverview = () => {
             setTasklist(tasklist)
             const tasks = await taskService.getAll(tasklistId);
             setTasks(tasks);
+            setToggleTaskAdaption(false);
         } catch (ex) {
             console.error(ex);
         }
@@ -130,6 +133,44 @@ const TasklistOverview = () => {
         setToggleTaskAdaption(false);
     };
 
+    const taskCreationCard = <>
+        <Card>
+            <CardContent sx={{pt: 1}}>
+                <TaskCreationForm
+                    onSubmit={handleCreateTask}
+                />
+            </CardContent>
+        </Card>
+    </>;
+
+    const taskListCard = <>
+        <Card sx={{mt: 2}}>
+            <CardContent sx={{pt: 0}}>
+                <TaskList
+                    tasks={tasks}
+                    onDelete={handleDelete}
+                    onMarkFinished={handleMarkFinished}
+                    onMarkImportant={handleMarkImportant}
+                    onClickTitle={handleOpenTaskAdaption}
+                />
+            </CardContent>
+        </Card>
+    </>;
+
+    const taskAdaptionCard = <>
+        <Card>
+            <CardContent sx={{pt: 1}}>
+                <TaskAdaptionForm
+                    task={taskToAdapt}
+                    onSubmit={handleUpdateTask}
+                    onMarkImportant={handleMarkImportant}
+                    onDelete={handleDelete}
+                    onClose={handleCloseTaskAdaption}
+                />
+            </CardContent>
+        </Card>
+    </>;
+
     return (
         <>
             <Helmet>
@@ -164,46 +205,31 @@ const TasklistOverview = () => {
                         Share
                     </Button>
                 </Box>
-
-                <Grid container spacing={1}>
-                    <Grid item xs={toggleTaskAdaption ? 6 : 12}>
-                        <Card>
-                            <CardContent sx={{pt: 1}}>
-                                <TaskCreationForm
-                                    onSubmit={handleCreateTask}
-                                />
-                            </CardContent>
-                        </Card>
-                        <Card sx={{mt: 2}}>
-                            <CardContent sx={{pt: 0}}>
-                                <TaskList
-                                    tasks={tasks}
-                                    onDelete={handleDelete}
-                                    onMarkFinished={handleMarkFinished}
-                                    onMarkImportant={handleMarkImportant}
-                                    onClickTitle={handleOpenTaskAdaption}
-                                />
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    {
-                        toggleTaskAdaption &&
-                        <Grid item xs={6}>
-                            <Card>
-                                <CardContent sx={{pt: 1}}>
-                                    <TaskAdaptionForm
-                                        task={taskToAdapt}
-                                        onSubmit={handleUpdateTask}
-                                        onMarkImportant={handleMarkImportant}
-                                        onDelete={handleDelete}
-                                        onClose={handleCloseTaskAdaption}
-                                    />
-                                </CardContent>
-                            </Card>
+                {
+                    smUp ?
+                        <Grid container spacing={1}>
+                            <Grid item xs={toggleTaskAdaption ? 6 : 12}>
+                                {taskCreationCard}
+                                {taskListCard}
+                            </Grid>
+                            {
+                                toggleTaskAdaption &&
+                                <Grid item xs={6}>
+                                    {taskAdaptionCard}
+                                </Grid>
+                            }
                         </Grid>
-                    }
-                </Grid>
-
+                        :
+                        toggleTaskAdaption ?
+                            <>
+                                {taskAdaptionCard}
+                            </>
+                            :
+                            <>
+                                {taskCreationCard}
+                                {taskListCard}
+                            </>
+                }
 
             </Box>
         </>
