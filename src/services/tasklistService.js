@@ -1,23 +1,25 @@
-import {apiUrl} from "../config.json";
 import http from "./httpService";
 
+// eslint-disable-next-line no-undef
+const apiUrl = process.env.REACT_APP_API_URL + "/tasklists";
+
 async function getAll() {
-    const response = await http.get(apiUrl + "/tasklists");
+    const response = await http.get(apiUrl);
     return response.data;
 }
 
 async function getById(tasklistId) {
-    const response = await http.get(apiUrl + "/tasklists/" + tasklistId);
+    const response = await http.get(apiUrl + "/" + tasklistId);
     return response.data;
 }
 
 async function create(tasklist) {
-    const response = await http.post(apiUrl + "/tasklists", tasklist);
+    const response = await http.post(apiUrl, tasklist);
     return response.data;
 }
 
 async function remove(tasklistId) {
-    const response = await http.post(apiUrl + "/tasklists/" + tasklistId);
+    const response = await http.post(apiUrl + "/" + tasklistId);
     return response.data;
 }
 

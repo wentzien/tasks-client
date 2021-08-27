@@ -1,10 +1,10 @@
 import http from "./httpService";
-import {apiUrl} from "../config.json";
 
-const apiEndpoint = apiUrl + "/users";
+// eslint-disable-next-line no-undef
+const apiUrl = process.env.REACT_APP_API_URL + "/users";
 
 const register = async (user) => {
-    const {data: token} = await http.post(apiEndpoint, {
+    const {data: token} = await http.post(apiUrl, {
         email: user.email,
         password: user.password,
         name: user.name

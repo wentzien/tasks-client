@@ -1,12 +1,12 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
-import {apiUrl} from "../config.json";
 
-const apiEndpoint = apiUrl + "/auth";
+// eslint-disable-next-line no-undef
+const apiUrl = process.env.REACT_APP_API_URL + "/auth";
 const tokenKey = "token";
 
 const login = async (user) => {
-    const {data: token} = await http.post(apiEndpoint, {
+    const {data: token} = await http.post(apiUrl, {
         email: user.email,
         password: user.password
     });
