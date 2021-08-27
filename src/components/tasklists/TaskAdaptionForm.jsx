@@ -44,7 +44,7 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                             <StarOutlineRoundedIcon/>
                         </IconButton>
                 }
-                <IconButton aria-label="delete" onClick={() => onDelete(task.id)}>
+                <IconButton aria-label="delete" onClick={() => onDelete(task)}>
                     <DeleteOutlineRoundedIcon/>
                 </IconButton>
             </Box>

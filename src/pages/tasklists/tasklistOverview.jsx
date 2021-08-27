@@ -6,13 +6,11 @@ import {Helmet} from "react-helmet-async";
 import toast from "react-hot-toast";
 import _ from "lodash";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import TaskList from "../../components/tasklists/TaskList";
-import TaskCreationForm from "../../components/tasklists/TaskCreationForm";
-import TaskAdaptionForm from "../../components/tasklists/TaskAdaptionForm";
+import TaskListCard from "../../components/tasklists/TaskListCard";
+import TaskAdaptionCard from "../../components/tasklists/TaskAdaptionCard";
+import TaskCreationCard from "../../components/tasklists/TaskCreationCard";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
@@ -82,12 +80,14 @@ const TasklistOverview = () => {
         }
     };
 
-    const handleDelete = async (taskId) => {
+    const handleDelete = async (task) => {
         const tasksBackup = [...tasks];
         try {
-            const tasksCache = tasks.filter(task => task.id !== taskId);
+            const tasksCache = [...tasks];
+            const index = tasksCache.indexOf(task);
+            tasksCache.splice(index, 1);
             setTasks(tasksCache);
-            await taskService.remove(tasklistId, taskId);
+            await taskService.remove(tasklistId, task.id);
             setToggleTaskAdaption(false);
         } catch (ex) {
             console.error(ex);
@@ -134,41 +134,27 @@ const TasklistOverview = () => {
     };
 
     const taskCreationCard = <>
-        <Card>
-            <CardContent sx={{pt: 1}}>
-                <TaskCreationForm
-                    onSubmit={handleCreateTask}
-                />
-            </CardContent>
-        </Card>
-    </>;
+        <TaskCreationCard onSubmit={handleCreateTask}/>
+    </>
 
     const taskListCard = <>
-        <Card sx={{mt: 2}}>
-            <CardContent sx={{pt: 0}}>
-                <TaskList
-                    tasks={tasks}
-                    onDelete={handleDelete}
-                    onMarkFinished={handleMarkFinished}
-                    onMarkImportant={handleMarkImportant}
-                    onClickTitle={handleOpenTaskAdaption}
-                />
-            </CardContent>
-        </Card>
+        <TaskListCard
+            tasks={tasks}
+            onDelete={handleDelete}
+            onMarkFinished={handleMarkFinished}
+            onMarkImportant={handleMarkImportant}
+            onClickTitle={handleOpenTaskAdaption}
+        />
     </>;
 
     const taskAdaptionCard = <>
-        <Card>
-            <CardContent sx={{pt: 1}}>
-                <TaskAdaptionForm
-                    task={taskToAdapt}
-                    onSubmit={handleUpdateTask}
-                    onMarkImportant={handleMarkImportant}
-                    onDelete={handleDelete}
-                    onClose={handleCloseTaskAdaption}
-                />
-            </CardContent>
-        </Card>
+        <TaskAdaptionCard
+            task={taskToAdapt}
+            onSubmit={handleUpdateTask}
+            onMarkImportant={handleMarkImportant}
+            onDelete={handleDelete}
+            onClose={handleCloseTaskAdaption}
+        />
     </>;
 
     return (

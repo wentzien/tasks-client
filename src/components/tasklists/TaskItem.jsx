@@ -63,7 +63,7 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle
                         />
                 }
                 <DeleteOutlineRoundedIcon
-                    onClick={() => onDelete(task.id)}
+                    onClick={() => onDelete(task)}
                     sx={{cursor: "pointer"}}
                 />
             </Box>

@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import {Formik, Form, useField} from "formik";
+import {Formik, Form} from "formik";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import FormikTextField from "../formik/FormikTextField";
@@ -44,13 +44,6 @@ const TaskCreationForm = ({onSubmit}) => {
                             </FormHelperText>
                         </Box>
                     )}
-                    {/*<Box*/}
-                    {/*    sx={{*/}
-                    {/*        alignItems: "center",*/}
-                    {/*        display: "flex"*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    <Box sx={{ flexGrow: 1 }} />*/}
                         <Button
                             fullWidth
                             color="primary"
@@ -61,7 +54,6 @@ const TaskCreationForm = ({onSubmit}) => {
                         >
                             Save
                         </Button>
-                    {/*</Box>*/}
                 </Form>
             )}
         </Formik>

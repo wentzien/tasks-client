@@ -1,7 +1,3 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import TaskItem from "./TaskItem";
 import {useEffect, useState} from "react";
