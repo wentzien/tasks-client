@@ -30,7 +30,7 @@ const TaskCreationForm = ({onSubmit}) => {
               }) => (
                 <Form>
                     <FormikTextField
-                        label="Task title"
+                        label="New task"
                         name="title"
                         type="text"
                         fullWidth

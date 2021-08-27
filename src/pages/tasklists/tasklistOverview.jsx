@@ -174,13 +174,17 @@ const TasklistOverview = () => {
                                 />
                             </CardContent>
                         </Card>
-                        <TaskList
-                            tasks={tasks}
-                            onDelete={handleDelete}
-                            onMarkFinished={handleMarkFinished}
-                            onMarkImportant={handleMarkImportant}
-                            onClickTitle={handleOpenTaskAdaption}
-                        />
+                        <Card sx={{mt: 2}}>
+                            <CardContent sx={{pt: 0}}>
+                                <TaskList
+                                    tasks={tasks}
+                                    onDelete={handleDelete}
+                                    onMarkFinished={handleMarkFinished}
+                                    onMarkImportant={handleMarkImportant}
+                                    onClickTitle={handleOpenTaskAdaption}
+                                />
+                            </CardContent>
+                        </Card>
                     </Grid>
                     {
                         toggleTaskAdaption &&

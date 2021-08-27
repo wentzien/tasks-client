@@ -18,7 +18,7 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle
                 padding: 2
             }}
         >
-            <Box sx={{display: "flex", cursor: "pointer"}} onClick={() => onClickTitle(task)}>
+            <Box sx={{display: "flex"}}>
                 <Box sx={{display: "flex", alignItems: "center"}}>
                     {
                         task.done ?
@@ -33,7 +33,7 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle
                             />
                     }
                 </Box>
-                <Box sx={{ml: 2}}>
+                <Box sx={{ml: 2, cursor: "pointer"}} onClick={() => onClickTitle(task)}>
                     <Typography
                         color="textPrimary"
                         variant="subtitle2"

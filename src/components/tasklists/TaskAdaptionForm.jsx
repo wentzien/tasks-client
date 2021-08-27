@@ -74,7 +74,7 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                             variant="outlined"
                         />
                         <FormikTextField
-                            sx={{mt: 1}}
+                            sx={{mt: 2}}
                             label="Description"
                             name="description"
                             type="text"
@@ -85,7 +85,7 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                             variant="outlined"
                         />
                         <QuillEditor
-                            sx={{mt: 1, height: 400}}
+                            sx={{mt: 2, height: 400}}
                             placeholder="Notes"
                             value={values.notes}
                             onChange={v => setFieldValue("notes", v)}

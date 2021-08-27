@@ -21,27 +21,21 @@ const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant, onClickTitl
     }, [tasks]);
 
     return (
-        <Card sx={{mt: 4}}>
-            {/*<CardHeader title={"My Tasklist"}/>*/}
-            {/*<Divider/>*/}
-            <CardContent sx={{pt: 0}}>
-                <List>
-                    {
-                        sortedTasks.map((task) => (
-                            <TaskItem
-                                key={task.id}
-                                task={task}
-                                onDelete={onDelete}
-                                onMarkFinished={onMarkFinished}
-                                onMarkImportant={onMarkImportant}
-                                onClickTitle={onClickTitle}
-                                divider={renderDivider()}
-                            />
-                        ))
-                    }
-                </List>
-            </CardContent>
-        </Card>
+        <List>
+            {
+                sortedTasks.map((task) => (
+                    <TaskItem
+                        key={task.id}
+                        task={task}
+                        onDelete={onDelete}
+                        onMarkFinished={onMarkFinished}
+                        onMarkImportant={onMarkImportant}
+                        onClickTitle={onClickTitle}
+                        divider={renderDivider()}
+                    />
+                ))
+            }
+        </List>
     );
 };
 
