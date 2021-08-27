@@ -6,7 +6,7 @@ import List from "@material-ui/core/List";
 import TaskItem from "./TaskItem";
 import {useEffect, useState} from "react";
 
-const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant}) => {
+const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant, onClickTitle}) => {
     const [sortedTasks, setSortedTasks] = useState([]);
     let taskCounter = 0;
 
@@ -22,8 +22,8 @@ const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant}) => {
 
     return (
         <Card sx={{mt: 4}}>
-            <CardHeader title={"My Tasklist"}/>
-            <Divider/>
+            {/*<CardHeader title={"My Tasklist"}/>*/}
+            {/*<Divider/>*/}
             <CardContent sx={{pt: 0}}>
                 <List>
                     {
@@ -34,6 +34,7 @@ const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant}) => {
                                 onDelete={onDelete}
                                 onMarkFinished={onMarkFinished}
                                 onMarkImportant={onMarkImportant}
+                                onClickTitle={onClickTitle}
                                 divider={renderDivider()}
                             />
                         ))

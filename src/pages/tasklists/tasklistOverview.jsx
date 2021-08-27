@@ -1,23 +1,28 @@
 import {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, Link as RouterLink} from "react-router-dom";
 import taskService from "../../services/taskService";
 import TaskList from "../../components/tasklists/TaskList";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {Helmet} from "react-helmet-async";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import GroupAddRoundedIcon from "@material-ui/icons/GroupAddRounded";
+import {Helmet} from "react-helmet-async";
 import tasklistService from "../../services/tasklistService";
-import TaskForm from "../../components/tasklists/TaskForm";
+import TaskCreationForm from "../../components/tasklists/TaskCreationForm";
 import _ from "lodash";
 import toast from "react-hot-toast";
+import TaskAdaptionForm from "../../components/tasklists/TaskAdaptionForm";
 
 const TasklistOverview = () => {
     const {tasklistId} = useParams();
-    const [tasklist, setTasklist] = useState({
-        title: "My Tasklist"
-    });
+    const [tasklist, setTasklist] = useState({title: "loading..."});
+    const [taskToAdapt, setTaskToAdapt] = useState({});
     const [tasks, setTasks] = useState([]);
+    const [toggleTaskAdaption, setToggleTaskAdaption] = useState(false);
 
     useEffect(async () => {
         try {
@@ -32,7 +37,7 @@ const TasklistOverview = () => {
 
     }, [tasklistId]);
 
-    const handleSubmit = async (values, {setStatus, setSubmitting, resetForm}) => {
+    const handleCreateTask = async (values, {setStatus, setSubmitting, resetForm}) => {
         const tasksBackup = [...tasks];
         try {
             let tasksCache = [...tasks]
@@ -60,12 +65,27 @@ const TasklistOverview = () => {
         resetForm();
     };
 
+    const handleUpdateTask = async (task, values, {setStatus, setSubmitting}) => {
+        try {
+            task.title = values.title;
+            task.description = values.description;
+            task.notes = values.notes;
+            await updateTask(task);
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                setStatus(ex.response.data);
+                setSubmitting(false);
+            }
+        }
+    };
+
     const handleDelete = async (taskId) => {
         const tasksBackup = [...tasks];
         try {
             const tasksCache = tasks.filter(task => task.id !== taskId);
             setTasks(tasksCache);
             await taskService.remove(tasklistId, taskId);
+            setToggleTaskAdaption(false);
         } catch (ex) {
             console.error(ex);
             toast.error("Unable to delete task.");
@@ -92,13 +112,22 @@ const TasklistOverview = () => {
 
             setTasks(tasksCache);
             const taskId = updatedTask.id;
-            updatedTask = _.pick(updatedTask, ["description", "done", "important"]);
+            updatedTask = _.pick(updatedTask, ["title", "done", "important", "description", "notes"]);
             await taskService.update(tasklistId, taskId, updatedTask);
         } catch (ex) {
             console.error(ex);
             toast.error("Unable to update task.");
             setTasks(tasksBackup);
         }
+    };
+
+    const handleOpenTaskAdaption = (task) => {
+        setTaskToAdapt(task);
+        setToggleTaskAdaption(true);
+    };
+
+    const handleCloseTaskAdaption = () => {
+        setToggleTaskAdaption(false);
     };
 
     return (
@@ -116,19 +145,62 @@ const TasklistOverview = () => {
                 <Typography variant="h1">
                     {tasklist.title}
                 </Typography>
-                <Card sx={{mt: 4}}>
-                    <CardContent sx={{pt: 0}}>
-                        <TaskForm
-                            onSubmit={handleSubmit}
+                <Box sx={{display: "flex", justifyContent: "flex-end"}}>
+                    <Button
+                        color="primary"
+                        size="large"
+                        startIcon={<EditRoundedIcon/>}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        sx={{ml: 3}}
+                        component={RouterLink}
+                        to=""
+                        color="primary"
+                        size="large"
+                        startIcon={<GroupAddRoundedIcon/>}
+                    >
+                        Share
+                    </Button>
+                </Box>
+
+                <Grid container spacing={1}>
+                    <Grid item xs={toggleTaskAdaption ? 6 : 12}>
+                        <Card>
+                            <CardContent sx={{pt: 1}}>
+                                <TaskCreationForm
+                                    onSubmit={handleCreateTask}
+                                />
+                            </CardContent>
+                        </Card>
+                        <TaskList
+                            tasks={tasks}
+                            onDelete={handleDelete}
+                            onMarkFinished={handleMarkFinished}
+                            onMarkImportant={handleMarkImportant}
+                            onClickTitle={handleOpenTaskAdaption}
                         />
-                    </CardContent>
-                </Card>
-                <TaskList
-                    tasks={tasks}
-                    onDelete={handleDelete}
-                    onMarkFinished={handleMarkFinished}
-                    onMarkImportant={handleMarkImportant}
-                />
+                    </Grid>
+                    {
+                        toggleTaskAdaption &&
+                        <Grid item xs={6}>
+                            <Card>
+                                <CardContent sx={{pt: 1}}>
+                                    <TaskAdaptionForm
+                                        task={taskToAdapt}
+                                        onSubmit={handleUpdateTask}
+                                        onMarkImportant={handleMarkImportant}
+                                        onDelete={handleDelete}
+                                        onClose={handleCloseTaskAdaption}
+                                    />
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    }
+                </Grid>
+
+
             </Box>
         </>
     );

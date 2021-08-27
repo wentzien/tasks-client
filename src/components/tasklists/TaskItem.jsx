@@ -7,7 +7,7 @@ import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
 import ListItem from "@material-ui/core/ListItem";
 
-const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, divider}) => {
+const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle, divider}) => {
     return (
         <ListItem
             key={task.id}
@@ -18,7 +18,7 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, divider}) =>
                 padding: 2
             }}
         >
-            <Box display="flex">
+            <Box sx={{display: "flex", cursor: "pointer"}} onClick={() => onClickTitle(task)}>
                 <Box sx={{display: "flex", alignItems: "center"}}>
                     {
                         task.done ?
@@ -38,7 +38,7 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, divider}) =>
                         color="textPrimary"
                         variant="subtitle2"
                     >
-                        {task.description}
+                        {task.title}
                     </Typography>
                     <Typography
                         color="textSecondary"

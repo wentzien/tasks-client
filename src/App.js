@@ -14,7 +14,7 @@ function App() {
         direction: "rtl",
         responsiveFontSizes: true,
         roundedCorners: true,
-        theme: "LIGHT"
+        theme: "DARK"
     });
 
     return (

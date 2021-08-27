@@ -68,14 +68,14 @@ const AccountPopover = () => {
                         color="textPrimary"
                         variant="subtitle2"
                     >
-                        {user ? user.name : "Username"}
+                        Hello {user ? user.name : "Guest"}!
                     </Typography>
                 </Box>
                 <Divider/>
                 <Box sx={{mt: 2}}>
                     <MenuItem
                         component={RouterLink}
-                        to="/dashboard/social/profile"
+                        to="/social/profile"
                     >
                         <ListItemIcon>
                             <UserIcon fontSize="small"/>
@@ -93,7 +93,7 @@ const AccountPopover = () => {
                     </MenuItem>
                     <MenuItem
                         component={RouterLink}
-                        to="/dashboard/account"
+                        to="/account"
                     >
                         <ListItemIcon>
                             <CogIcon fontSize="small"/>

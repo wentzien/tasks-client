@@ -2,35 +2,20 @@ import * as yup from "yup";
 import {Formik, Form, useField} from "formik";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import FormikTextField from "../formik/FormikTextField";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 const initialValues = {
-    description: "",
+    title: "",
 };
 
 const validationSchema = yup.object({
-    description: yup
-        .string("Enter your task description")
-        .required("Task description is required"),
+    title: yup
+        .string("Enter your task title")
+        .required("Task title is required"),
 });
 
-const FormikTextField = ({...props}) => {
-    const [field, meta] = useField(props);
-
-    return (
-        <>
-            <TextField
-                {...field}
-                {...props}
-                error={Boolean(meta.touched && meta.error)}
-                helperText={meta.touched && meta.error}
-            />
-        </>
-    );
-}
-
-const TaskForm = ({onSubmit}) => {
+const TaskCreationForm = ({onSubmit}) => {
     return (
         <Formik
             initialValues={initialValues}
@@ -45,8 +30,8 @@ const TaskForm = ({onSubmit}) => {
               }) => (
                 <Form>
                     <FormikTextField
-                        label="Task description"
-                        name="description"
+                        label="Task title"
+                        name="title"
                         type="text"
                         fullWidth
                         margin="normal"
@@ -59,27 +44,28 @@ const TaskForm = ({onSubmit}) => {
                             </FormHelperText>
                         </Box>
                     )}
-                    <Box
-                        sx={{
-                            alignItems: "center",
-                            display: "flex"
-                        }}
-                    >
-                        <Box sx={{ flexGrow: 1 }} />
+                    {/*<Box*/}
+                    {/*    sx={{*/}
+                    {/*        alignItems: "center",*/}
+                    {/*        display: "flex"*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <Box sx={{ flexGrow: 1 }} />*/}
                         <Button
+                            fullWidth
                             color="primary"
                             disabled={isSubmitting || !isValid || !dirty}
-                            sx={{ ml: 1 }}
+                            // sx={{ ml: 1 }}
                             type="submit"
                             variant="contained"
                         >
                             Save
                         </Button>
-                    </Box>
+                    {/*</Box>*/}
                 </Form>
             )}
         </Formik>
     );
 };
 
-export default TaskForm;
+export default TaskCreationForm;
