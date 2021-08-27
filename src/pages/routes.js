@@ -19,8 +19,8 @@ const Welcome = Loadable(lazy(() => import("./Welcome")));
 
 // Tasklist Pages
 
-const GeneralListOverview = Loadable(lazy(() => import("../pages/tasklists/GeneralListsOverview")));
-const TasklistOverview = Loadable(lazy(() => import("../pages/tasklists/TasklistOverview")));
+const GeneralListOverview = Loadable(lazy(() => import("./tasklists/GeneralListsOverview")));
+const TasklistOverview = Loadable(lazy(() => import("./tasklists/TasklistOverview")));
 const CreateTasklist = Loadable(lazy(() => import("./tasklists/CreateTasklist")));
 const TaskView = Loadable(lazy(() => import("./tasklists/TaskView")));
 
@@ -32,9 +32,9 @@ const Logout = Loadable(lazy(() => import("./authentication/Logout")));
 
 // Error pages
 
-const AuthorizationRequired = Loadable(lazy(() => import("../pages/AuthorizationRequired")));
-const NotFound = Loadable(lazy(() => import("../pages/NotFound")));
-const ServerError = Loadable(lazy(() => import("../pages/ServerError")));
+const AuthorizationRequired = Loadable(lazy(() => import("./AuthorizationRequired")));
+const NotFound = Loadable(lazy(() => import("./NotFound")));
+const ServerError = Loadable(lazy(() => import("./ServerError")));
 
 // Other pages
 
