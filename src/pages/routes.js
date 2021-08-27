@@ -19,6 +19,7 @@ const Welcome = Loadable(lazy(() => import("./Welcome")));
 
 // Tasklist Pages
 
+const GeneralListOverview = Loadable(lazy(() => import("../pages/tasklists/GeneralListsOverview")));
 const TasklistOverview = Loadable(lazy(() => import("../pages/tasklists/TasklistOverview")));
 const CreateTasklist = Loadable(lazy(() => import("./tasklists/CreateTasklist")));
 const TaskView = Loadable(lazy(() => import("./tasklists/TaskView")));
@@ -75,6 +76,30 @@ const routes = [
             {
                 path: "new",
                 element: <CreateTasklist/>
+            },
+            {
+                path: "myday",
+                element: <GeneralListOverview type="myday" title="My day"/>
+            },
+            {
+                path: "important",
+                element: <GeneralListOverview type="important" title="Important"/>
+            },
+            {
+                path: "planned",
+                element: <GeneralListOverview type="planned" title="Planned"/>
+            },
+            {
+                path: "all",
+                element: <GeneralListOverview type="all" title="All"/>
+            },
+            {
+                path: "done",
+                element: <GeneralListOverview type="done" title="Done"/>
+            },
+            {
+                path: "assignedtome",
+                element: <GeneralListOverview type="assignedtome" title="Assigned to me"/>
             },
             {
                 path: ":tasklistId",

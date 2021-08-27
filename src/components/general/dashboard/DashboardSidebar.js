@@ -30,32 +30,32 @@ const basicSections = [
         items: [
             {
                 title: "My day",
-                path: "/home/myday",
+                path: "/tasklists/myday",
                 icon: <TodayRoundedIcon fontSize="small"/>
             },
             {
                 title: "Important",
-                path: "/home/important",
+                path: "/tasklists/important",
                 icon: <StarBorderRoundedIcon fontSize="small"/>
             },
             {
                 title: "Planned",
-                path: "/home/planned",
+                path: "/tasklists/planned",
                 icon: <EventRoundedIcon fontSize="small"/>
             },
             {
                 title: "All",
-                path: "/home/all",
+                path: "/tasklists/all",
                 icon: <AllInclusiveIcon fontSize="small"/>
             },
             {
                 title: "Done",
-                path: "/home/done",
+                path: "/tasklists/done",
                 icon: <DoneRoundedIcon fontSize="small"/>
             },
             {
                 title: "Assigned to me",
-                path: "/home/assignedtome",
+                path: "/tasklists/assignedtome",
                 icon: <PersonRoundedIcon fontSize="small"/>
             }
         ]
