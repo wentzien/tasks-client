@@ -18,6 +18,11 @@ async function create(tasklist) {
     return response.data;
 }
 
+async function update(tasklistId, tasklist) {
+    const response = await http.put(apiUrl + "/" + tasklistId, tasklist);
+    return response.data;
+}
+
 async function remove(tasklistId) {
     const response = await http.post(apiUrl + "/" + tasklistId);
     return response.data;
@@ -27,5 +32,6 @@ export default {
     getAll,
     getById,
     create,
+    update,
     remove
 };

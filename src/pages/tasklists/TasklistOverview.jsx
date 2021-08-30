@@ -9,6 +9,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import TaskListCard from "../../components/tasklists/TaskListCard";
 import TaskAdaptionCard from "../../components/tasklists/TaskAdaptionCard";
 import TaskCreationCard from "../../components/tasklists/TaskCreationCard";
+import TasklistEditDialog from "../../components/tasklists/TasklistEditDialog";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -22,6 +23,7 @@ const TasklistOverview = () => {
     const [taskToAdapt, setTaskToAdapt] = useState({});
     const [tasks, setTasks] = useState([]);
     const [toggleTaskAdaption, setToggleTaskAdaption] = useState(false);
+    const [toggleTasklistEdit, setToggleTasklistEdit] = useState(false);
     const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
 
     useEffect(async () => {
@@ -67,16 +69,29 @@ const TasklistOverview = () => {
     };
 
     const handleUpdateTask = async (task, values, {setStatus, setSubmitting}) => {
-        try {
             task.title = values.title;
             task.description = values.description;
             task.notes = values.notes;
-            await updateTask(task);
+            await updateTask(task, {setStatus, setSubmitting});
+    };
+
+    const handleUpdateTasklist = async (values, {setStatus, setSubmitting}) => {
+        const tasklistBackup = {...tasklist};
+        try {
+            const tasklistCache = {...tasklist};
+            tasklistCache.title = values.title;
+            tasklistCache.allowShareByLink = values.allowShareByLink;
+
+            setTasklist(tasklistCache);
+            await tasklistService.update(tasklistId, _.pick(tasklistCache, ["title", "allowShareByLink"]));
         } catch (ex) {
+            console.error(ex);
+            toast.error("Unable to update tasklist.");
             if (ex.response && ex.response.status === 400) {
                 setStatus(ex.response.data);
                 setSubmitting(false);
             }
+            setTasklist(tasklistBackup);
         }
     };
 
@@ -106,7 +121,7 @@ const TasklistOverview = () => {
         await updateTask(task);
     };
 
-    const updateTask = async (updatedTask) => {
+    const updateTask = async (updatedTask, {setStatus, setSubmitting}) => {
         const tasksBackup = [...tasks];
         try {
             const tasksCache = [...tasks];
@@ -120,6 +135,10 @@ const TasklistOverview = () => {
         } catch (ex) {
             console.error(ex);
             toast.error("Unable to update task.");
+            if (ex.response && ex.response.status === 400) {
+                setStatus(ex.response.data);
+                setSubmitting(false);
+            }
             setTasks(tasksBackup);
         }
     };
@@ -131,6 +150,14 @@ const TasklistOverview = () => {
 
     const handleCloseTaskAdaption = () => {
         setToggleTaskAdaption(false);
+    };
+
+    const handleOpenTasklistEdit = () => {
+        setToggleTasklistEdit(true);
+    };
+
+    const handleCloseTasklistEdit = () => {
+        setToggleTasklistEdit(false);
     };
 
     const taskCreationCard = <>
@@ -172,14 +199,22 @@ const TasklistOverview = () => {
                 <Typography variant="h1">
                     {tasklist.title}
                 </Typography>
+                <TasklistEditDialog
+                    open={toggleTasklistEdit}
+                    onSubmit={handleUpdateTasklist}
+                    handleClose={handleCloseTasklistEdit}
+                    tasklist={tasklist}
+                />
                 <Box sx={{display: "flex", justifyContent: "flex-end"}}>
                     <Button
+                        onClick={handleOpenTasklistEdit}
                         color="primary"
                         size="large"
                         startIcon={<EditRoundedIcon/>}
                     >
                         Edit
                     </Button>
+
                     <Button
                         sx={{ml: 3}}
                         component={RouterLink}
