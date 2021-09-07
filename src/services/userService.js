@@ -11,8 +11,14 @@ const register = async (user) => {
     });
 
     return token;
-}
+};
+
+const getAllInvites = async () => {
+    const response = await http.get(apiUrl + "/invites");
+    return response.data;
+};
 
 export default {
-    register
+    register,
+    getAllInvites
 }
