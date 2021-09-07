@@ -7,10 +7,6 @@ import AccountPopover from "./AccountPopover";
 import ContentSearch from "./ContentSearch";
 import Logo from "../Logo";
 import NotificationsPopover from "./NotificationsPopover";
-import {useEffect, useState} from "react";
-import userService from "../../../services/userService";
-import useAuth from "../../../hooks/useAuth";
-import {Navigate} from "react-router-dom";
 
 const DashboardNavbarRoot = experimentalStyled(AppBar)(({theme}) => ({
     ...(theme.palette.mode === "light" && {
@@ -26,45 +22,7 @@ const DashboardNavbarRoot = experimentalStyled(AppBar)(({theme}) => ({
     zIndex: theme.zIndex.drawer + 100
 }));
 
-const DashboardNavbar = (props) => {
-    const {onSidebarMobileOpen, ...other} = props;
-    const [invites, setInvites] = useState([]);
-    const {user} = useAuth();
-
-    useEffect(async () => {
-        if (user) {
-            try {
-                const invites = await userService.getAllInvites();
-                setInvites(invites);
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
-    }, [user]);
-
-
-    const handleAcceptInvite = async (collaboratorId) => {
-        try {
-            const {TasklistId} = await userService.acceptInvite(collaboratorId);
-
-            const invitesCache = invites.filter(i => i.id !== collaboratorId);
-            setInvites(invitesCache);
-        } catch (ex) {
-            console.error(ex);
-        }
-    };
-
-    const handleDeclineInvite = async (collaboratorId) => {
-        try {
-            const {TasklistId} = await userService.declineInvite(collaboratorId);
-
-            const invitesCache = invites.filter(i => i.id !== collaboratorId);
-            setInvites(invitesCache);
-        } catch (ex) {
-            console.error(ex);
-        }
-    };
-
+const DashboardNavbar = ({onSidebarMobileOpen, invites, onAccept, onDecline, ...other}) => {
     return (
         <DashboardNavbarRoot {...other}>
             <Toolbar sx={{minHeight: 64}}>
@@ -97,18 +55,14 @@ const DashboardNavbar = (props) => {
                         ml: 2
                     }}
                 />
-                {/*<LanguagePopover />*/}
                 <Box sx={{ml: 1}}>
                     <ContentSearch/>
                 </Box>
-                {/*<Box sx={{ ml: 1 }}>*/}
-                {/*  <ContactsPopover />*/}
-                {/*</Box>*/}
                 <Box sx={{ml: 1}}>
                     <NotificationsPopover
                         invites={invites}
-                        onAccept={handleAcceptInvite}
-                        onDecline={handleDeclineInvite}
+                        onAccept={onAccept}
+                        onDecline={onDecline}
                     />
                 </Box>
                 <Box sx={{ml: 2}}>

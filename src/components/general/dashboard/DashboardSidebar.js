@@ -5,74 +5,13 @@ import {Avatar, Box, Button, Divider, Drawer, Link, Typography} from "@material-
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useAuth from "../../../hooks/useAuth";
 
-import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
-import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
-import EventRoundedIcon from "@material-ui/icons/EventRounded";
-import DoneRoundedIcon from "@material-ui/icons/DoneRounded";
-import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
-import TodayRoundedIcon from "@material-ui/icons/TodayRounded";
-import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-
 import Logo from "../Logo";
 import NavSection from "../NavSection";
 import Scrollbar from "../Scrollbar";
-import tasklistService from "../../../services/tasklistService";
 
-const tasklistCreationNavItem = {
-    title: "Create Tasklist",
-    path: "/tasklists/new",
-    icon: <AddBoxOutlinedIcon/>
-};
-
-const basicSections = [
-    {
-        title: "General",
-        items: [
-            {
-                title: "My day",
-                path: "/tasklists/myday",
-                icon: <TodayRoundedIcon fontSize="small"/>
-            },
-            {
-                title: "Important",
-                path: "/tasklists/important",
-                icon: <StarBorderRoundedIcon fontSize="small"/>
-            },
-            {
-                title: "Planned",
-                path: "/tasklists/planned",
-                icon: <EventRoundedIcon fontSize="small"/>
-            },
-            {
-                title: "All",
-                path: "/tasklists/all",
-                icon: <AllInclusiveIcon fontSize="small"/>
-            },
-            {
-                title: "Done",
-                path: "/tasklists/done",
-                icon: <DoneRoundedIcon fontSize="small"/>
-            },
-            {
-                title: "Assigned to me",
-                path: "/tasklists/assignedtome",
-                icon: <PersonRoundedIcon fontSize="small"/>
-            }
-        ]
-    },
-    {
-        title: "Tasklists",
-        items: [
-            tasklistCreationNavItem
-        ]
-    }
-];
-
-const DashboardSidebar = (props) => {
-    const {onMobileClose, openMobile} = props;
+const DashboardSidebar = ({onMobileClose, openMobile, sections}) => {
     const location = useLocation();
     const {user} = useAuth();
-    const [sections, setSections] = useState(basicSections);
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
     useEffect(() => {
@@ -80,21 +19,6 @@ const DashboardSidebar = (props) => {
             onMobileClose();
         }
     }, [location.pathname]);
-
-    useEffect(async () => {
-        if (user) {
-            try {
-                const tasklists = await tasklistService.getAll();
-                if (tasklists) {
-                    const newSections = [...sections];
-                    newSections[1].items = [tasklistCreationNavItem, ...tasklists];
-                    setSections(newSections);
-                }
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
-    }, [user, location.pathname]);
 
     const content = (
         <Box
