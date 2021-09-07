@@ -7,22 +7,23 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import FormikTextField from "../formik/FormikTextField";
-import FormikSwitch from "../formik/FormikSwitch";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import FormikSelect from "../formik/FormikSelect";
 
 const validationSchema = yup.object({
-    title: yup
-        .string("Enter your title")
-        .required("Title is required"),
-    allowShareByLink: yup
-        .boolean("Adjust online accessibility")
-        .required("Online accessibility is required")
+    email: yup
+        .string("Enter an collaborators email")
+        .email("Enter a valid email")
+        .required("Email is required"),
+    role: yup
+        .string("Select a role")
+        .oneOf(["Editor", "Reader", "Creator"])
 });
 
-const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose}) => {
+const TasklistShareDialog = ({onSubmit, open, handleClose}) => {
     const initialValues = {
-        title: tasklist.title,
-        allowShareByLink: tasklist.allowShareByLink
+        email: "",
+        role: "Editor"
     };
 
     return (
@@ -41,23 +42,28 @@ const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose}) =
                               status,
                               isSubmitting,
                               isValid,
+                              dirty
                           }) => (
                             <Form>
                                 <FormikTextField
-                                    label="Title"
-                                    name="title"
-                                    type="text"
+                                    label="Collaborator email"
+                                    name="email"
+                                    type="email"
                                     fullWidth
                                     margin="normal"
                                     variant="outlined"
                                 />
-                                <FormikSwitch
-                                    label="Allow Sharing"
-                                    description="Enabling this will allow you to share the list online via a
-                                    link."
-                                    name="allowShareByLink"
-                                    color="primary"
-                                    edge="start"
+                                <FormikSelect
+                                    label="Role"
+                                    name="role"
+                                    fullWidth
+                                    margin="normal"
+                                    variant="outlined"
+                                    items={[
+                                        {name: "Editor", value: "Editor"},
+                                        {name: "Reader", value: "Reader"},
+                                        {name: "Creator", value: "Creator"},
+                                    ]}
                                 />
                                 {status && (
                                     <Box sx={{mt: 3}}>
@@ -74,9 +80,9 @@ const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose}) =
                                         Cancel
                                     </Button>
                                     <Button
-                                        disabled={isSubmitting || !isValid}
+                                        disabled={isSubmitting || !isValid || !dirty}
                                         type="submit"
-                                        onClick={handleClose}
+                                        // onClick={handleClose}
                                         color="primary"
                                     >
                                         Save
@@ -91,5 +97,5 @@ const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose}) =
     );
 };
 
-export default TasklistEditDialog;
+export default TasklistShareDialog;
 

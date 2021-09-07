@@ -10,12 +10,14 @@ import TaskListCard from "../../components/tasklists/TaskListCard";
 import TaskAdaptionCard from "../../components/tasklists/TaskAdaptionCard";
 import TaskCreationCard from "../../components/tasklists/TaskCreationCard";
 import TasklistEditDialog from "../../components/tasklists/TasklistEditDialog";
+import TasklistShareDialog from "../../components/tasklists/TasklistShareDialog";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import GroupAddRoundedIcon from "@material-ui/icons/GroupAddRounded";
+import inviteService from "../../services/inviteService";
 
 const TasklistOverview = () => {
     const {tasklistId} = useParams();
@@ -24,6 +26,7 @@ const TasklistOverview = () => {
     const [tasks, setTasks] = useState([]);
     const [toggleTaskAdaption, setToggleTaskAdaption] = useState(false);
     const [toggleTasklistEdit, setToggleTasklistEdit] = useState(false);
+    const [toggleShare, setToggleShare] = useState(false);
     const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
 
     useEffect(async () => {
@@ -69,10 +72,10 @@ const TasklistOverview = () => {
     };
 
     const handleUpdateTask = async (task, values, {setStatus, setSubmitting}) => {
-            task.title = values.title;
-            task.description = values.description;
-            task.notes = values.notes;
-            await updateTask(task, {setStatus, setSubmitting});
+        task.title = values.title;
+        task.description = values.description;
+        task.notes = values.notes;
+        await updateTask(task, {setStatus, setSubmitting});
     };
 
     const handleUpdateTasklist = async (values, {setStatus, setSubmitting}) => {
@@ -95,7 +98,22 @@ const TasklistOverview = () => {
         }
     };
 
-    const handleDelete = async (task) => {
+    const handleInvite = async (values, {setStatus, setSubmitting}) => {
+        try {
+            await inviteService.inviteUser(tasklistId, values);
+            handleCloseShare();
+        } catch (ex) {
+            console.error(ex);
+            toast.error("Unable to invite user.");
+            if (ex.response && ex.response.status === 400 || ex.response.status === 404) {
+                console.log(ex.response.data);
+                setStatus(ex.response.data);
+                setSubmitting(false);
+            }
+        }
+    }
+
+    const handleDeleteTask = async (task) => {
         const tasksBackup = [...tasks];
         try {
             const tasksCache = [...tasks];
@@ -160,6 +178,14 @@ const TasklistOverview = () => {
         setToggleTasklistEdit(false);
     };
 
+    const handleOpenShare = () => {
+        setToggleShare(true);
+    };
+
+    const handleCloseShare = () => {
+        setToggleShare(false);
+    };
+
     const taskCreationCard = <>
         <TaskCreationCard onSubmit={handleCreateTask}/>
     </>
@@ -167,7 +193,7 @@ const TasklistOverview = () => {
     const taskListCard = <>
         <TaskListCard
             tasks={tasks}
-            onDelete={handleDelete}
+            onDelete={handleDeleteTask}
             onMarkFinished={handleMarkFinished}
             onMarkImportant={handleMarkImportant}
             onClickTitle={handleOpenTaskAdaption}
@@ -179,7 +205,7 @@ const TasklistOverview = () => {
             task={taskToAdapt}
             onSubmit={handleUpdateTask}
             onMarkImportant={handleMarkImportant}
-            onDelete={handleDelete}
+            onDelete={handleDeleteTask}
             onClose={handleCloseTaskAdaption}
         />
     </>;
@@ -205,6 +231,11 @@ const TasklistOverview = () => {
                     handleClose={handleCloseTasklistEdit}
                     tasklist={tasklist}
                 />
+                <TasklistShareDialog
+                    open={toggleShare}
+                    onSubmit={handleInvite}
+                    handleClose={handleCloseShare}
+                />
                 <Box sx={{display: "flex", justifyContent: "flex-end"}}>
                     <Button
                         onClick={handleOpenTasklistEdit}
@@ -217,8 +248,7 @@ const TasklistOverview = () => {
 
                     <Button
                         sx={{ml: 3}}
-                        component={RouterLink}
-                        to=""
+                        onClick={handleOpenShare}
                         color="primary"
                         size="large"
                         startIcon={<GroupAddRoundedIcon/>}
