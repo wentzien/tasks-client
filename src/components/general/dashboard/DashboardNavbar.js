@@ -4,14 +4,13 @@ import {AppBar, Box, IconButton, Toolbar} from "@material-ui/core";
 import {experimentalStyled} from "@material-ui/core/styles";
 import MenuIcon from "../../../icons/Menu";
 import AccountPopover from "./AccountPopover";
-// import ContactsPopover from "./ContactsPopover";
 import ContentSearch from "./ContentSearch";
-// import LanguagePopover from "./LanguagePopover";
 import Logo from "../Logo";
 import NotificationsPopover from "./NotificationsPopover";
 import {useEffect, useState} from "react";
 import userService from "../../../services/userService";
 import useAuth from "../../../hooks/useAuth";
+import {Navigate} from "react-router-dom";
 
 const DashboardNavbarRoot = experimentalStyled(AppBar)(({theme}) => ({
     ...(theme.palette.mode === "light" && {
@@ -34,11 +33,37 @@ const DashboardNavbar = (props) => {
 
     useEffect(async () => {
         if (user) {
-            const invites = await userService.getAllInvites();
-            setInvites(invites);
-            console.log(invites);
+            try {
+                const invites = await userService.getAllInvites();
+                setInvites(invites);
+            } catch (ex) {
+                console.error(ex);
+            }
         }
     }, [user]);
+
+
+    const handleAcceptInvite = async (collaboratorId) => {
+        try {
+            const {TasklistId} = await userService.acceptInvite(collaboratorId);
+
+            const invitesCache = invites.filter(i => i.id !== collaboratorId);
+            setInvites(invitesCache);
+        } catch (ex) {
+            console.error(ex);
+        }
+    };
+
+    const handleDeclineInvite = async (collaboratorId) => {
+        try {
+            const {TasklistId} = await userService.declineInvite(collaboratorId);
+
+            const invitesCache = invites.filter(i => i.id !== collaboratorId);
+            setInvites(invitesCache);
+        } catch (ex) {
+            console.error(ex);
+        }
+    };
 
     return (
         <DashboardNavbarRoot {...other}>
@@ -82,6 +107,8 @@ const DashboardNavbar = (props) => {
                 <Box sx={{ml: 1}}>
                     <NotificationsPopover
                         invites={invites}
+                        onAccept={handleAcceptInvite}
+                        onDecline={handleDeclineInvite}
                     />
                 </Box>
                 <Box sx={{ml: 2}}>

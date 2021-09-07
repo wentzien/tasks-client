@@ -62,7 +62,7 @@ const iconsMap = {
     invited: ShareIcon
 };
 
-const NotificationsPopover = ({invites}) => {
+const NotificationsPopover = ({invites, onAccept, onDecline}) => {
     const anchorRef = useRef(null);
     const [open, setOpen] = useState(false);
 
@@ -164,6 +164,7 @@ const NotificationsPopover = ({invites}) => {
                                                     color="primary"
                                                     aria-label="Accept"
                                                     variant="contained"
+                                                    onClick={() => onAccept(invite.id)}
                                                 >
                                                     <CheckRoundedIcon/>
                                                 </IconButton>
@@ -171,6 +172,7 @@ const NotificationsPopover = ({invites}) => {
                                                     color="primary"
                                                     aria-label="Decline"
                                                     variant="contained"
+                                                    onClick={() => onDecline(invite.id)}
                                                 >
                                                     <CloseRoundedIcon/>
                                                 </IconButton>

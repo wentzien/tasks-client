@@ -18,7 +18,19 @@ const getAllInvites = async () => {
     return response.data;
 };
 
+const acceptInvite = async (collaboratorId) => {
+    const response = await http.get(apiUrl + "/invites/" + collaboratorId + "/accept");
+    return response.data;
+};
+
+const declineInvite = async (collaboratorId) => {
+    const response = await http.get(apiUrl + "/invites" + collaboratorId + "/decline");
+    return response.data;
+};
+
 export default {
     register,
-    getAllInvites
+    getAllInvites,
+    acceptInvite,
+    declineInvite
 }

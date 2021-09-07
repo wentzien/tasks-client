@@ -139,7 +139,8 @@ const TasklistOverview = () => {
         await updateTask(task);
     };
 
-    const updateTask = async (updatedTask, {setStatus, setSubmitting}) => {
+    const updateTask = async (updatedTask, formik) => {
+
         const tasksBackup = [...tasks];
         try {
             const tasksCache = [...tasks];
@@ -153,7 +154,8 @@ const TasklistOverview = () => {
         } catch (ex) {
             console.error(ex);
             toast.error("Unable to update task.");
-            if (ex.response && ex.response.status === 400) {
+            if (formik && ex.response && ex.response.status === 400) {
+                const {setStatus, setSubmitting} = formik;
                 setStatus(ex.response.data);
                 setSubmitting(false);
             }
