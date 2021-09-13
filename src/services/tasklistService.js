@@ -24,7 +24,7 @@ async function update(tasklistId, tasklist) {
 }
 
 async function remove(tasklistId) {
-    const response = await http.post(apiUrl + "/" + tasklistId);
+    const response = await http.delete(apiUrl + "/" + tasklistId);
     return response.data;
 }
 
