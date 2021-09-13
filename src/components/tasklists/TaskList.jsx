@@ -2,7 +2,7 @@ import List from "@material-ui/core/List";
 import TaskItem from "./TaskItem";
 import {useEffect, useState} from "react";
 
-const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant, onClickTitle}) => {
+const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant, onClickTitle, disabled}) => {
     const [sortedTasks, setSortedTasks] = useState([]);
     let taskCounter = 0;
 
@@ -28,6 +28,7 @@ const TaskList = ({tasks, onDelete, onMarkFinished, onMarkImportant, onClickTitl
                         onMarkImportant={onMarkImportant}
                         onClickTitle={onClickTitle}
                         divider={renderDivider()}
+                        disabled={disabled}
                     />
                 ))
             }

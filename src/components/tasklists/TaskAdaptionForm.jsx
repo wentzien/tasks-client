@@ -21,7 +21,7 @@ const validationSchema = yup.object({
         .string("Enter your notes")
 });
 
-const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) => {
+const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant, disabled}) => {
     const initialValues = {
         title: task.title || "",
         description: task.description || "",
@@ -36,15 +36,15 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                 </IconButton>
                 {
                     task.important ?
-                        <IconButton aria-label="close" onClick={() => onMarkImportant(task)}>
+                        <IconButton aria-label="close" onClick={() => onMarkImportant(task)} disabled={disabled}>
                             <StarRoundedIcon/>
                         </IconButton>
                         :
-                        <IconButton aria-label="close" onClick={() => onMarkImportant(task)}>
+                        <IconButton aria-label="close" onClick={() => onMarkImportant(task)} disabled={disabled}>
                             <StarOutlineRoundedIcon/>
                         </IconButton>
                 }
-                <IconButton aria-label="delete" onClick={() => onDelete(task)}>
+                <IconButton aria-label="delete" onClick={() => onDelete(task)}  disabled={disabled}>
                     <DeleteOutlineRoundedIcon/>
                 </IconButton>
             </Box>
@@ -72,6 +72,7 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                             fullWidth
                             margin="normal"
                             variant="outlined"
+                            disabled={disabled}
                         />
                         <FormikTextField
                             sx={{mt: 2}}
@@ -83,12 +84,14 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                             rows={6}
                             margin="normal"
                             variant="outlined"
+                            disabled={disabled}
                         />
                         <QuillEditor
                             sx={{mt: 2, height: 400}}
                             placeholder="Notes"
                             value={values.notes}
                             onChange={v => setFieldValue("notes", v)}
+                            readOnly={disabled}
                         />
                         {status && (
                             <Box sx={{mt: 3}}>
@@ -101,7 +104,7 @@ const TaskAdaptionForm = ({onSubmit, task, onClose, onDelete, onMarkImportant}) 
                             sx={{mt: 2}}
                             fullWidth
                             color="primary"
-                            disabled={isSubmitting || !isValid}
+                            disabled={isSubmitting || !isValid || disabled}
                             type="submit"
                             variant="contained"
                         >

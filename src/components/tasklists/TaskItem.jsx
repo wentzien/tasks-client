@@ -2,12 +2,13 @@ import Box from "@material-ui/core/Box";
 import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton"
 import StarOutlineRoundedIcon from "@material-ui/icons/StarOutlineRounded";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
 import ListItem from "@material-ui/core/ListItem";
 
-const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle, divider}) => {
+const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle, divider, disabled}) => {
     return (
         <ListItem
             key={task.id}
@@ -21,16 +22,13 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle
             <Box sx={{display: "flex"}}>
                 <Box sx={{display: "flex", alignItems: "center"}}>
                     {
-                        task.done ?
-                            <CheckCircleRoundedIcon
-                                onClick={() => onMarkFinished(task)}
-                                sx={{cursor: "pointer"}}
-                            />
-                            :
-                            <RadioButtonUncheckedRoundedIcon
-                                onClick={() => onMarkFinished(task)}
-                                sx={{cursor: "pointer"}}
-                            />
+                        <IconButton onClick={() => onMarkFinished(task)} disabled={disabled}>
+                            {task.done ?
+                                <CheckCircleRoundedIcon/>
+                                :
+                                <RadioButtonUncheckedRoundedIcon/>
+                            }
+                        </IconButton>
                     }
                 </Box>
                 <Box sx={{ml: 2, cursor: "pointer"}} onClick={() => onClickTitle(task)}>
@@ -50,22 +48,17 @@ const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle
             </Box>
 
             <Box display="flex">
-                {
-                    task.important ?
-                        <StarRoundedIcon
-                            onClick={() => onMarkImportant(task)}
-                            sx={{cursor: "pointer"}}
-                        />
-                        :
-                        <StarOutlineRoundedIcon
-                            onClick={() => onMarkImportant(task)}
-                            sx={{cursor: "pointer"}}
-                        />
-                }
-                <DeleteOutlineRoundedIcon
-                    onClick={() => onDelete(task)}
-                    sx={{cursor: "pointer"}}
-                />
+                <IconButton onClick={() => onMarkImportant(task)} disabled={disabled}>
+                    {
+                        task.important ?
+                            <StarRoundedIcon/>
+                            :
+                            <StarOutlineRoundedIcon/>
+                    }
+                </IconButton>
+                <IconButton onClick={() => onDelete(task)} disabled={disabled}>
+                    <DeleteOutlineRoundedIcon/>
+                </IconButton>
             </Box>
         </ListItem>
     );

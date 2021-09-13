@@ -28,20 +28,34 @@ const TasklistOverview = () => {
     const [toggleTasklistEdit, setToggleTasklistEdit] = useState(false);
     const [toggleShare, setToggleShare] = useState(false);
     const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+    const [role, setRole] = useState();
+    const [canEdit, setCanEdit] = useState(false);
+    const [canMakeSettings, setCanMakeSettings] = useState(false);
+    const [canShare, setCanShare] = useState(false);
 
     useEffect(async () => {
         try {
             const tasklist = await tasklistService.getById(tasklistId);
-            setTasklist(tasklist)
+            setTasklist(tasklist);
             const tasks = await taskService.getAll(tasklistId);
             setTasks(tasks);
             setToggleTaskAdaption(false);
         } catch (ex) {
             console.error(ex);
         }
-
-
     }, [tasklistId]);
+
+    useEffect(() => {
+        if (tasklist.Collaborators) {
+            setRole(tasklist.Collaborators[0].role);
+        }
+    }, [tasklist])
+
+    useEffect(() => {
+        setCanEdit(role === "Creator" || role === "Editor");
+        setCanShare(role === "Creator" || role === "Editor");
+        setCanMakeSettings(role === "Creator");
+    }, [role]);
 
     const handleCreateTask = async (values, {setStatus, setSubmitting, resetForm}) => {
         const tasksBackup = [...tasks];
@@ -84,9 +98,10 @@ const TasklistOverview = () => {
             const tasklistCache = {...tasklist};
             tasklistCache.title = values.title;
             tasklistCache.allowShareByLink = values.allowShareByLink;
+            tasklistCache.shared = values.shared;
 
             setTasklist(tasklistCache);
-            await tasklistService.update(tasklistId, _.pick(tasklistCache, ["title", "allowShareByLink"]));
+            await tasklistService.update(tasklistId, _.pick(tasklistCache, ["title", "allowShareByLink", "shared"]));
         } catch (ex) {
             console.error(ex);
             toast.error("Unable to update tasklist.");
@@ -95,6 +110,17 @@ const TasklistOverview = () => {
                 setSubmitting(false);
             }
             setTasklist(tasklistBackup);
+        }
+    };
+
+    const handleTasklistDelete = async () => {
+        handleCloseTasklistEdit();
+        try {
+            await tasklistService.remove(tasklistId);
+            toast.success("Tasklist has been deleted.");
+        } catch (ex) {
+            console.error(ex);
+            toast.error("Unable to delete tasklist.");
         }
     };
 
@@ -199,6 +225,7 @@ const TasklistOverview = () => {
             onMarkFinished={handleMarkFinished}
             onMarkImportant={handleMarkImportant}
             onClickTitle={handleOpenTaskAdaption}
+            disabled={!canEdit}
         />
     </>;
 
@@ -209,13 +236,38 @@ const TasklistOverview = () => {
             onMarkImportant={handleMarkImportant}
             onDelete={handleDeleteTask}
             onClose={handleCloseTaskAdaption}
+            disabled={!canEdit}
+        />
+    </>;
+
+    const tasklistEditDialog = <>
+        <TasklistEditDialog
+            open={toggleTasklistEdit}
+            onSubmit={handleUpdateTasklist}
+            onDelete={handleTasklistDelete}
+            handleClose={handleCloseTasklistEdit}
+            tasklist={tasklist}
+            disabled={!canMakeSettings}
+        />
+    </>;
+
+    const tasklistShareDialog = <>
+        <TasklistShareDialog
+            open={toggleShare}
+            onSubmit={handleInvite}
+            handleClose={handleCloseShare}
         />
     </>;
 
     return (
         <>
             <Helmet>
-                <title>{tasklist.title} | Tasks App</title>
+                <title>
+                    {role === "Reader" ? "Reading Mode | " : ""}
+                    {role === "Editor" ? "Editor Mode | " : ""}
+                    {role === "Creator" ? "Creator Mode | " : ""}
+                    {tasklist.title} | Tasks App
+                </title>
             </Helmet>
             <Box
                 sx={{
@@ -227,33 +279,25 @@ const TasklistOverview = () => {
                 <Typography variant="h1">
                     {tasklist.title}
                 </Typography>
-                <TasklistEditDialog
-                    open={toggleTasklistEdit}
-                    onSubmit={handleUpdateTasklist}
-                    handleClose={handleCloseTasklistEdit}
-                    tasklist={tasklist}
-                />
-                <TasklistShareDialog
-                    open={toggleShare}
-                    onSubmit={handleInvite}
-                    handleClose={handleCloseShare}
-                />
                 <Box sx={{display: "flex", justifyContent: "flex-end"}}>
+                    {tasklistEditDialog}
                     <Button
                         onClick={handleOpenTasklistEdit}
                         color="primary"
                         size="large"
                         startIcon={<EditRoundedIcon/>}
+                        disabled={role !== "Creator" && role !== "Editor"}
                     >
-                        Edit
+                        Settings
                     </Button>
-
+                    {tasklistShareDialog}
                     <Button
                         sx={{ml: 3}}
                         onClick={handleOpenShare}
                         color="primary"
                         size="large"
                         startIcon={<GroupAddRoundedIcon/>}
+                        disabled={!tasklist.shared || !canShare}
                     >
                         Share
                     </Button>
@@ -262,7 +306,7 @@ const TasklistOverview = () => {
                     smUp ?
                         <Grid container spacing={1}>
                             <Grid item xs={toggleTaskAdaption ? 6 : 12}>
-                                {taskCreationCard}
+                                {canEdit && taskCreationCard}
                                 {taskListCard}
                             </Grid>
                             {
