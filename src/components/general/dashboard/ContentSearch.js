@@ -166,7 +166,7 @@ const ContentSearch = () => {
                                                             ))}
                                                         </>
                                                     ) :
-                                                    (
+                                                    (showResults &&
                                                         <>
                                                             <Typography color="textPrimary">
                                                                 Nothing found
@@ -174,11 +174,6 @@ const ContentSearch = () => {
                                                         </>
                                                     )
                                             }
-                                            {showResults && results.length > 0 && (
-                                                <>
-
-                                                </>
-                                            )}
                                         </>
                                     )}
                             </Scrollbar>
