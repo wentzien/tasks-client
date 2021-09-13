@@ -11,6 +11,7 @@ import EventRoundedIcon from "@material-ui/icons/EventRounded";
 import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
 import DoneRoundedIcon from "@material-ui/icons/DoneRounded";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
+import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
 import useAuth from "../../../hooks/useAuth";
 import userService from "../../../services/userService";
 

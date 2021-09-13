@@ -24,7 +24,6 @@ const reduceChildRoutes = ({acc, pathname, item, depth}) => {
     // if no icon provided
     item.icon = item.icon || <ListRoundedIcon fontSize="small"/>
     // ------------------------
-
     // const key = `${item.title}-${depth}`;
     const key = `${"nav" + (item.id || item.title)}-${depth}`;
 
@@ -67,6 +66,7 @@ const reduceChildRoutes = ({acc, pathname, item, depth}) => {
                 key={key}
                 path={item.path}
                 title={item.title}
+                shared={item.shared}
             />
         );
     }
