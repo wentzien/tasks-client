@@ -16,7 +16,7 @@ const FormikTextField = ({...props}) => {
                 <InputLabel
                     id={"select-menu-" + props.name + "-label"}
                 >
-                    Age
+                    {props.label}
                 </InputLabel>
                 <Select
                     labelId={"select-menu-" + props.name + "-label"}

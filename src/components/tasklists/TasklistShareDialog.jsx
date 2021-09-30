@@ -30,7 +30,7 @@ const TasklistShareDialog = ({onSubmit, open, handleClose}) => {
         <>
             <Dialog maxWidth="sm" fullWidth open={open} onClose={handleClose}
                     aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit tasklist</DialogTitle>
+                <DialogTitle id="form-dialog-title">Share tasklist</DialogTitle>
                 <DialogContent>
                     <Formik
                         enableReinitialize
