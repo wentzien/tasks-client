@@ -4,12 +4,12 @@ import taskService from "../../services/taskService";
 import {Helmet} from "react-helmet-async";
 import toast from "react-hot-toast";
 import _ from "lodash";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import TaskListCard from "../../components/tasklists/TaskListCard";
 import TaskAdaptionCard from "../../components/tasklists/TaskAdaptionCard";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 const GeneralListOverview = ({type, title}) => {
     const [taskToAdapt, setTaskToAdapt] = useState({});

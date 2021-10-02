@@ -5,18 +5,18 @@ import taskService from "../../services/taskService";
 import {Helmet} from "react-helmet-async";
 import toast from "react-hot-toast";
 import _ from "lodash";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import TaskListCard from "../../components/tasklists/TaskListCard";
 import TaskAdaptionCard from "../../components/tasklists/TaskAdaptionCard";
 import TaskCreationCard from "../../components/tasklists/TaskCreationCard";
 import TasklistEditDialog from "../../components/tasklists/TasklistEditDialog";
 import TasklistShareDialog from "../../components/tasklists/TasklistShareDialog";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import GroupAddRoundedIcon from "@material-ui/icons/GroupAddRounded";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import GroupAddRoundedIcon from "@mui/icons-material/GroupAddRounded";
 import inviteService from "../../services/inviteService";
 
 const TasklistOverview = () => {

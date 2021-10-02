@@ -1,6 +1,6 @@
 import React from "react";
 import {Helmet} from "react-helmet-async";
-import {Box, Card, CardContent, Container, Divider, Link, Typography} from "@material-ui/core";
+import {Box, Card, CardContent, Container, Divider, Link, Typography} from "@mui/material";
 import Logo from "../../components/general/Logo";
 import LoginForm from "../../components/authentication/LoginForm";
 import {Link as RouterLink} from "react-router-dom";

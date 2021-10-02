@@ -1,6 +1,6 @@
 import TaskAdaptionForm from "./TaskAdaptionForm";
-import CardContent from "@material-ui/core/CardContent";
-import Card from "@material-ui/core/Card";
+import CardContent from "@mui/material/CardContent";
+import Card from "@mui/material/Card";
 
 const TaskAdaptionCard = ({task, onSubmit, onMarkImportant, onDelete, onClose, disabled}) => {
     return (

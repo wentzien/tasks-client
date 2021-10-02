@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 
 // eslint-disable-next-line react/display-name
 const Scrollbar = forwardRef((props, ref) => {

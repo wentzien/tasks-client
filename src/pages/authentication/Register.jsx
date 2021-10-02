@@ -2,7 +2,7 @@ import React from "react";
 import RegisterForm from "../../components/authentication/RegisterForm";
 import {Helmet} from "react-helmet-async";
 import {Link as RouterLink} from "react-router-dom";
-import { Box, Card, CardContent, Container, Divider, Link, Typography } from "@material-ui/core";
+import { Box, Card, CardContent, Container, Divider, Link, Typography } from "@mui/material";
 import AuthBanner from "../../components/authentication/AuthBanner";
 import Logo from "../../components/general/Logo";
 

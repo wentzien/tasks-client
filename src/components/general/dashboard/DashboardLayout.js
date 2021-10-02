@@ -1,17 +1,17 @@
 import {useEffect, useState} from "react";
 import {Outlet, useLocation} from "react-router-dom";
-import { experimentalStyled } from "@material-ui/core/styles";
+import { experimentalStyled } from "@mui/material/styles";
 import DashboardNavbar from "./DashboardNavbar";
 import DashboardSidebar from "./DashboardSidebar";
 import tasklistService from "../../../services/tasklistService";
-import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-import TodayRoundedIcon from "@material-ui/icons/TodayRounded";
-import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
-import EventRoundedIcon from "@material-ui/icons/EventRounded";
-import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
-import DoneRoundedIcon from "@material-ui/icons/DoneRounded";
-import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
-import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
+import EventRoundedIcon from "@mui/icons-material/EventRounded";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 import useAuth from "../../../hooks/useAuth";
 import userService from "../../../services/userService";
 

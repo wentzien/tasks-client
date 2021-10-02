@@ -1,10 +1,10 @@
 import {useState} from "react";
 import {NavLink as RouterLink} from "react-router-dom";
 import PropTypes from "prop-types";
-import {Box, Button, Collapse, ListItem} from "@material-ui/core";
+import {Box, Button, Collapse, ListItem} from "@mui/material";
 import ChevronDownIcon from "../../icons/ChevronDown";
 import ChevronRightIcon from "../../icons/ChevronRight";
-import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
+import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 
 const NavItem = (props) => {
     const {active, children, depth, icon, info, open: openProp, path, title, shared, ...other} = props;

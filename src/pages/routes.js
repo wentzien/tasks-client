@@ -70,7 +70,6 @@ const routes = [
             </AuthGuard>,
         children: [
             {
-                path: "/",
                 element: "My Tasklists Dashboard"
             },
             {
@@ -105,7 +104,6 @@ const routes = [
                 path: ":tasklistId",
                 children: [
                     {
-                        path: "/",
                         element: <TasklistOverview/>
                     },
                     {
@@ -121,7 +119,6 @@ const routes = [
         element: <MainLayout/>,
         children: [
             {
-                path: "/",
                 element:
                     <GuestGuard>
                         <Welcome/>

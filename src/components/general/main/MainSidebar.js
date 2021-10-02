@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Box, Button, Chip, Drawer, Link } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Box, Button, Chip, Drawer, Link } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Logo from "../Logo";
 
 const MainSidebar = (props) => {

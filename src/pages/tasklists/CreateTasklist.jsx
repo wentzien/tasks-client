@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {Helmet} from "react-helmet-async";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import TasklistForm from "../../components/tasklists/TasklistForm";
 import tasklistService from "../../services/tasklistService";
 import {Navigate} from "react-router-dom";

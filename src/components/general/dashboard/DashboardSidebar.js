@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {Link as RouterLink, useLocation} from "react-router-dom";
 import PropTypes from "prop-types";
-import {Avatar, Box, Divider, Drawer, Link, Typography} from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {Avatar, Box, Divider, Drawer, Link, Typography} from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import useAuth from "../../../hooks/useAuth";
 
 import Logo from "../Logo";

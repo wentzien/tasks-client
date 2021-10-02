@@ -7,7 +7,7 @@ import {StrictMode} from "react";
 import ReactDOM from "react-dom";
 import {HelmetProvider} from "react-helmet-async";
 import {BrowserRouter} from "react-router-dom";
-import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
+import StyledEngineProvider from "@mui/material/StyledEngineProvider";
 import {AuthProvider} from "./contexts/AuthContext";
 import App from "./App";
 

@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Link, Tooltip, Typography } from "@material-ui/core";
+import { Box, Chip, Container, Link, Tooltip, Typography } from "@mui/material";
 
 const AuthBanner = () => (
   <Box

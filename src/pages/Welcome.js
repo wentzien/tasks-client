@@ -1,9 +1,9 @@
 import {Helmet} from "react-helmet-async";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import {Link as RouterLink} from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 
 const Welcome = () => {
     return (

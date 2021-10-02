@@ -1,6 +1,6 @@
 import {useField} from "formik";
-import Switch from "@material-ui/core/Switch";
-import Typography from "@material-ui/core/Typography";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
 
 const FormikTextField = ({...props}) => {
     const [field, meta] = useField(props);

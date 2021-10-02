@@ -11,7 +11,7 @@ import {
     MenuItem,
     Popover,
     Typography
-} from "@material-ui/core";
+} from "@mui/material";
 import useAuth from "../../../hooks/useAuth";
 import CogIcon from "../../../icons/Cog";
 import UserIcon from "../../../icons/User";

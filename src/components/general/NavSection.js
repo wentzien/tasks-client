@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import {matchPath} from "react-router-dom";
-import {List, ListSubheader} from "@material-ui/core";
+import {List, ListSubheader} from "@mui/material";
 import NavItem from "./NavItem";
-import ListRoundedIcon from "@material-ui/icons/ListRounded";
+import ListRoundedIcon from "@mui/icons-material/ListRounded";
 
 const renderNavItems = ({depth = 0, items, pathname}) => (
     <List disablePadding>

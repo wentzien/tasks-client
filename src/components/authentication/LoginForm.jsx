@@ -1,10 +1,10 @@
 import React from "react";
 import * as yup from "yup";
 import {Formik, Form, useField} from "formik";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormHelperText from "@mui/material/FormHelperText";
 import useAuth from "../../hooks/useAuth";
 
 const initialValues = {

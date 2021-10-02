@@ -1,12 +1,12 @@
-import Box from "@material-ui/core/Box";
-import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
-import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton"
-import StarOutlineRoundedIcon from "@material-ui/icons/StarOutlineRounded";
-import StarRoundedIcon from "@material-ui/icons/StarRounded";
-import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
-import ListItem from "@material-ui/core/ListItem";
+import Box from "@mui/material/Box";
+import RadioButtonUncheckedRoundedIcon from "@mui/icons-material/RadioButtonUncheckedRounded";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton"
+import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import ListItem from "@mui/material/ListItem";
 
 const TaskItem = ({task, onDelete, onMarkFinished, onMarkImportant, onClickTitle, divider, disabled}) => {
     return (

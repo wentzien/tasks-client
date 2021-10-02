@@ -9,34 +9,29 @@ import DialogActions from "@mui/material/DialogActions";
 import FormikTextField from "../formik/FormikTextField";
 import FormikSwitch from "../formik/FormikSwitch";
 import FormHelperText from "@mui/material/FormHelperText"
-import ConfirmationDialog from "../../pages/tasklists/ConfirmationDialog";
-import {useState} from "react";
 
 const validationSchema = yup.object({
-    title: yup
-        .string("Enter your title")
-        .required("Title is required"),
-    allowShareByLink: yup
-        .boolean("Adjust online accessibility")
-        .required("Online accessibility is required")
+    name: yup
+        .string("Enter your name")
+        .required("Name is required"),
+    email: yup
+        .string("Enter your email")
+        .email("Enter a valid email")
+        .required("Email is required"),
+    password: yup
+        .string("Enter your password")
+        .min(5, "Password should be of minimum 5 characters length")
+        .required("Password is required"),
 });
 
-const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose, disabled}) => {
-    const [toggleConfirmation, setToggleConfirmation] = useState(false);
+const TasklistEditDialog = ({onSubmit, user, open, handleClose}) => {
 
     const initialValues = {
-        title: tasklist.title,
-        allowShareByLink: tasklist.allowShareByLink,
-        shared: tasklist.shared
+        name: user.name,
+        email: user.email,
+        password: "",
+        theme: user.theme
     };
-
-    const handleOpenConfirmation = () => {
-        setToggleConfirmation(true);
-    };
-
-    const handleCloseConfirmation = () => {
-        setToggleConfirmation(false);
-    }
 
     return (
         <>
@@ -58,30 +53,35 @@ const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose, di
                           }) => (
                             <Form>
                                 <FormikTextField
-                                    label="Title"
-                                    name="title"
+                                    label="Name"
+                                    name="name"
                                     type="text"
                                     fullWidth
                                     margin="normal"
                                     variant="outlined"
-                                    disabled={disabled}
+                                />
+                                <FormikTextField
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    fullWidth
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <FormikTextField
+                                    label="New password"
+                                    name="password"
+                                    type="password"
+                                    fullWidth
+                                    margin="normal"
+                                    variant="outlined"
                                 />
                                 <FormikSwitch
-                                    label="Sharing"
-                                    description="Enable Share options. Cannot be reversed."
-                                    name="shared"
+                                    label="Theme"
+                                    description="Switch between light and dark theme."
+                                    name="theme"
                                     color="primary"
                                     edge="start"
-                                    disabled={disabled || tasklist.shared}
-                                />
-                                <FormikSwitch
-                                    label="Link Sharing"
-                                    description="Enabling this will allow you to share the list online via a
-                                    link."
-                                    name="allowShareByLink"
-                                    color="primary"
-                                    edge="start"
-                                    disabled={disabled || !values.shared}
                                 />
                                 {status && (
                                     <Box sx={{mt: 3}}>
@@ -91,18 +91,6 @@ const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose, di
                                     </Box>
                                 )}
                                 <DialogActions>
-                                    <ConfirmationDialog
-                                        open={toggleConfirmation}
-                                        onConfirmation={onDelete}
-                                        handleClose={handleCloseConfirmation}
-                                    />
-                                    <Button
-                                        onClick={handleOpenConfirmation}
-                                        color="secondary"
-                                        disabled={disabled}
-                                    >
-                                        Delete
-                                    </Button>
                                     <Button
                                         onClick={handleClose}
                                         color="primary"
@@ -110,7 +98,7 @@ const TasklistEditDialog = ({onSubmit, tasklist, onDelete, open, handleClose, di
                                         Cancel
                                     </Button>
                                     <Button
-                                        disabled={disabled || isSubmitting || !isValid}
+                                        disabled={isSubmitting || !isValid}
                                         type="submit"
                                         onClick={handleClose}
                                         color="primary"

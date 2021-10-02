@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {Link as RouterLink} from "react-router-dom";
-import {AppBar, Box, Divider, IconButton, Link, Toolbar} from "@material-ui/core";
+import {AppBar, Box, Divider, IconButton, Link, Toolbar} from "@mui/material";
 import MenuIcon from "../../../icons/Menu";
 import Logo from "../Logo";
 

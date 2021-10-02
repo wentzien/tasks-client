@@ -1,9 +1,9 @@
 import * as yup from "yup";
 import {Formik, Form} from "formik";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import FormikTextField from "../formik/FormikTextField";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import FormHelperText from "@mui/material/FormHelperText";
 
 const initialValues = {
     title: "",

@@ -1,15 +1,15 @@
 import * as yup from "yup";
 import {Formik, Form} from "formik";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
-import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
-import StarOutlineRoundedIcon from "@material-ui/icons/StarOutlineRounded";
-import StarRoundedIcon from "@material-ui/icons/StarRounded";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import QuillEditor from "../general/QuillEditor";
 import FormikTextField from "../formik/FormikTextField";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import FormHelperText from "@mui/material/FormHelperText";
 
 const validationSchema = yup.object({
     title: yup
